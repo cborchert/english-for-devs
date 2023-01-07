@@ -23,9 +23,15 @@ h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
 	margin: 0 0 var(--space-lg);
 	line-height: 1.125;
+	font-weight: bold;
 }
 
 h1,

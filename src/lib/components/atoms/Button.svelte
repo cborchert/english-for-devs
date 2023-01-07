@@ -1,16 +1,20 @@
 <script lang="ts">
-	export let onClick: () => void = () => {};
+	import { createEventDispatcher } from 'svelte';
+
 	export let href: string | null | undefined = undefined;
 	export let variant:
 		| 'primary'
 		| 'secondary'
+		| 'tertiary'
 		| 'gradient'
 		| 'error'
 		| 'success'
 		| 'neutral'
-		| 'tertiary' = 'primary';
+		| 'ghost' = 'primary';
 	export let size: 'small' | 'medium' | 'large' = 'medium';
 	export let disabled: boolean = false;
+
+	const dispatch = createEventDispatcher();
 
 	const variantClassNames = {
 		primary: 'button--primary',
@@ -19,6 +23,7 @@
 		success: 'button--success',
 		error: 'button--error',
 		neutral: 'button--neutral',
+		ghost: 'button--ghost',
 		gradient: 'button--gradient'
 	};
 
@@ -35,7 +40,14 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<svelte:element this={tag} on:click={onClick} class={className} {disabled} {href} {...$$restProps}>
+<svelte:element
+	this={tag}
+	on:click={() => dispatch('click')}
+	class={className}
+	{disabled}
+	{href}
+	{...$$restProps}
+>
 	<slot />
 </svelte:element>
 
@@ -84,6 +96,11 @@
 
 		&.button--tertiary {
 			background: var(--color-tertiary);
+		}
+
+		&.button--ghost {
+			background: transparent;
+			border: 1px solid var(--color-text);
 		}
 
 		&.button--success {

@@ -24,6 +24,7 @@
 	// other colors
 	--color-dark-gray: #14111a;
 	--color-gray: #1f1a28;
+	--color-light-gray: #352d42;
 	--color-dark-blue: #05182e;
 	--color-light-blue: #74a6c8;
 	--color-light-turquoise: #99ddd0;
@@ -32,6 +33,7 @@
 	// theme
 	--color-background: var(--color-dark-gray);
 	--color-background-alt: var(--color-gray);
+	--color-background-alt-light: var(--color-light-gray);
 	--color-background-gradient-start: var(--color-dark-gray);
 	--color-background-gradient-stop: var(--color-dark-blue);
 
@@ -57,6 +59,7 @@
 
 	--border-radius: 10px;
 	--box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
+	--box-shadow-top: 0 -5px 10px 0 rgba(0, 0, 0, 0.5);
 
 	--font-size: 1.8rem;
 	--font-size-sm: 1.4rem;
