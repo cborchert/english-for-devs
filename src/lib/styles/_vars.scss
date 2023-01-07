@@ -51,6 +51,7 @@
 	--color-warning-dark: var(--color-flat-orange);
 	--color-danger: var(--color-flat-alizarin);
 	--color-danger-dark: var(--color-flat-pomegranate);
+	--color-neutral: var(--color-flat-concrete);
 	--color-disabled: var(--color-flat-concrete);
 	--color-disabled-dark: var(--color-flat-asbestos);
 
@@ -61,10 +62,10 @@
 	--font-size-sm: 1.4rem;
 	--font-size-xs: 1rem;
 	--font-size-lg: 2.6rem;
-	--font-size-xl: 3.4rem;
-	--font-size-xxl: 4.2rem;
-	--font-size-xxxl: 4.8rem;
-	--font-size-xxxxl: 5.4rem;
+	--font-size-xl: clamp(3rem, 3.6vw, 3.6rem);
+	--font-size-xxl: clamp(3.6rem, 4.2vw, 4.2rem);
+	--font-size-xxxl: clamp(4rem, 4.6vw, 4.6rem);
+	--font-size-xxxxl: clamp(4.8rem, 6.5vw, 6.5rem);
 
 	--space-xxs: 2px;
 	--space-xs: 4px;
@@ -80,4 +81,5 @@
 	--width-md: 600px;
 	--width-lg: 800px;
 	--width-xl: 1000px;
+	--width-xxl: 1200px;
 }

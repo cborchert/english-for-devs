@@ -1,4 +1,5 @@
 <script>
+	import Button from '$lib/components/atoms/Button.svelte';
 	import Card from '$lib/components/atoms/Card.svelte';
 </script>
 

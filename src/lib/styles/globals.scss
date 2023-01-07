@@ -1,46 +1,8 @@
 @use 'reset';
 @use 'vars';
+@use 'utilities';
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-// add an animated underline to the element
-.with-animated-underline {
-	position: relative;
-	display: inline-block;
-	line-height: 1.125;
-
-	&:after {
-		display: block;
-		content: ' ';
-		height: 2px;
-		width: 0;
-		background-color: var(--color-primary);
-		transition: 400ms ease;
-	}
-	&:hover:after {
-		width: 100%;
-		opacity: 1;
-	}
-}
-
-.with-text-gradient {
-	background: -webkit-linear-gradient(
-		left,
-		var(--color-text-gradient-start),
-		var(--color-text-gradient-stop)
-	);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	color: var(--color-text-gradient-start);
-}
-
-.with-background-gradient {
-	background: linear-gradient(
-		45deg,
-		var(--color-background-gradient-start) 0%,
-		var(--color-background-gradient-stop) 100%
-	);
-	background-attachment: fixed;
-}
 
 html {
 	@extend .with-background-gradient;
