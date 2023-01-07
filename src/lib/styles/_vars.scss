@@ -1,0 +1,83 @@
+:root {
+	// Colors from Flat UI
+	--color-flat-turquoise: #1abc9c;
+	--color-flat-green-sea: #16a085;
+	--color-flat-emerald: #2ecc71;
+	--color-flat-nephritis: #27ae60;
+	--color-flat-peter-river: #3498db;
+	--color-flat-belize-hole: #2980b9;
+	--color-flat-amethyst: #9b59b6;
+	--color-flat-wisteria: #8e44ad;
+	--color-flat-wet-asphalt: #34495e;
+	--color-flat-midnight-blue: #2c3e50;
+	--color-flat-sun-flower: #f1c40f;
+	--color-flat-orange: #f39c12;
+	--color-flat-pumpkin: #d35400;
+	--color-flat-carrot: #e67e22;
+	--color-flat-alizarin: #e74c3c;
+	--color-flat-pomegranate: #c0392b;
+	--color-flat-clouds: #ecf0f1;
+	--color-flat-silver: #bdc3c7;
+	--color-flat-concrete: #95a5a6;
+	--color-flat-asbestos: #7f8c8d;
+
+	// other colors
+	--color-dark-gray: #14111a;
+	--color-gray: #1f1a28;
+	--color-dark-blue: #05182e;
+	--color-light-blue: #74a6c8;
+	--color-light-turquoise: #99ddd0;
+	--color-raspberry: #c34ca9;
+
+	// theme
+	--color-background: var(--color-dark-gray);
+	--color-background-alt: var(--color-gray);
+	--color-background-gradient-start: var(--color-dark-gray);
+	--color-background-gradient-stop: var(--color-dark-blue);
+
+	--color-text: var(--color-flat-clouds);
+	--color-text-gradient-start: var(--color-flat-sun-flower);
+	--color-text-gradient-stop: var(--color-raspberry);
+
+	--color-primary: var(--color-flat-turquoise);
+	--color-primary-dark: var(--color-flat-green-sea);
+	--color-tertiary: var(--color-flat-peter-river);
+	--color-tertiary-dark: var(--color-flat-belize-hole);
+	--color-secondary: var(--color-flat-amethyst);
+	--color-secondary-dark: var(--color-flat-wisteria);
+	--color-success: var(--color-flat-emerald);
+	--color-success-dark: var(--color-flat-nephritis);
+	--color-warning: var(--color-flat-sun-flower);
+	--color-warning-dark: var(--color-flat-orange);
+	--color-danger: var(--color-flat-alizarin);
+	--color-danger-dark: var(--color-flat-pomegranate);
+	--color-disabled: var(--color-flat-concrete);
+	--color-disabled-dark: var(--color-flat-asbestos);
+
+	--border-radius: 10px;
+	--box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
+
+	--font-size: 1.8rem;
+	--font-size-sm: 1.4rem;
+	--font-size-xs: 1rem;
+	--font-size-lg: 2.6rem;
+	--font-size-xl: 3.4rem;
+	--font-size-xxl: 4.2rem;
+	--font-size-xxxl: 4.8rem;
+	--font-size-xxxxl: 5.4rem;
+
+	--space-xxs: 2px;
+	--space-xs: 4px;
+	--space-sm: 8px;
+	--space-md: 16px;
+	--space: var(--space-md);
+	--space-lg: 32px;
+	--space-xl: 64px;
+	--space-xxl: 128px;
+	--space-xxxl: 256px;
+
+	--width-sm: 400px;
+	--width-md: 600px;
+	--width-lg: 800px;
+	--width-xl: 1000px;
+}
