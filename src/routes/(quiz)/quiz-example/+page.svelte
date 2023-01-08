@@ -5,6 +5,7 @@
 	import AccentText from '$lib/components/atoms/AccentText.svelte';
 	import ProgressBar from '$lib/components/atoms/ProgressBar.svelte';
 	import MultipleSelectExercise from '$lib/components/molecules/exercises/MultipleSelectExercise.svelte';
+	import FreeResponseExercise from '$lib/components/molecules/exercises/FreeResponseExercise.svelte';
 
 	const exercises = [
 		{
@@ -84,6 +85,42 @@
 			correctResponse: 'Team',
 			responseCaseSensitive: false,
 			exactResponseOnly: false
+		},
+		{
+			type: 'freeResponse',
+			question: 'Translate the following word into English: <mark>« fichier »</mark>',
+			correctResponse: 'File',
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'freeResponse',
+			question: 'Translate the following phrase into English: <mark>« ouvrir un fichier »</mark>',
+			correctResponse: 'Open a file',
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'freeResponse',
+			question: 'Translate the following word into English: <mark>« ordinateur portable »</mark>',
+			correctResponse: 'Laptop',
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'freeResponse',
+			question: 'Translate the following word into English: <mark>« clavier »</mark>',
+			correctResponse: 'Keyboard',
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'freeResponse',
+			question:
+				'Translate the following phrase into English: <mark>« sauvegarder un fichier »</mark>',
+			correctResponse: 'Save a file',
+			exactResponseOnly: false,
+			responseCaseSensitive: false
 		}
 	];
 
@@ -128,6 +165,18 @@
 		}
 	}
 
+	// if control/cmnd + enter is pressed, submit the answer
+	// handle mac and windows
+	function handleKeydown(event: KeyboardEvent) {
+		if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+			if (hasSubmitted) {
+				next();
+			} else {
+				respond();
+			}
+		}
+	}
+
 	$: fill = exercises.length ? Math.floor((currentExercise / exercises.length) * 100) : 0;
 
 	$: ({ correctResponse, responseCaseSensitive, exactResponseOnly, type } =
@@ -140,7 +189,7 @@
 	}
 </script>
 
-<div class="quizExample">
+<div class="quizExample" on:keydown={handleKeydown}>
 	{#if currentExercise < exercises.length}
 		<header>
 			<Container>
@@ -159,6 +208,10 @@
 				>
 					<span slot="question">{@html exercises[currentExercise].question || ''}</span>
 				</MultipleSelectExercise>
+			{:else if exercises[currentExercise]?.type === 'freeResponse'}
+				<FreeResponseExercise bind:value={answer} disabled={hasSubmitted}>
+					<span slot="question">{@html exercises[currentExercise].question || ''}</span>
+				</FreeResponseExercise>
 			{/if}
 		{:else}
 			<Container>

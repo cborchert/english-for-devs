@@ -111,3 +111,35 @@ a,
 mark {
 	@extend .with-text-gradient;
 }
+
+textarea,
+input {
+	&:not([type='file']),
+	&:not([type='checkbox']),
+	&:not([type='radio']),
+	&:not([type='submit']),
+	&:not([type='button']),
+	&:not([type='reset']) {
+		background: var(--color-background-alt);
+		border: 2px solid var(--color-background-alt-light);
+		border-radius: var(--border-radius);
+		width: 100%;
+		outline: none;
+		padding: var(--space);
+		color: var(--color-text);
+
+		&:focus {
+			border-color: var(--color-primary);
+		}
+
+		&:disabled {
+			background: var(--color-background-alt-light);
+			border-color: var(--color-background-alt-light);
+			cursor: not-allowed;
+		}
+	}
+}
+
+textarea {
+	min-height: 200px;
+}
