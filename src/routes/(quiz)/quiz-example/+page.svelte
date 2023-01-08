@@ -6,6 +6,7 @@
 	import ProgressBar from '$lib/components/atoms/ProgressBar.svelte';
 	import MultipleSelectExercise from '$lib/components/molecules/exercises/MultipleSelectExercise.svelte';
 	import FreeResponseExercise from '$lib/components/molecules/exercises/FreeResponseExercise.svelte';
+	import TokenSelectExercise from '$lib/components/molecules/exercises/TokenSelectExercise.svelte';
 
 	const exercises = [
 		{
@@ -121,8 +122,58 @@
 			correctResponse: 'Save a file',
 			exactResponseOnly: false,
 			responseCaseSensitive: false
+		},
+		{
+			type: 'tokenSelect',
+			question:
+				'Translate the following sentence into English: <mark>« Je suis en train de télécharger un fichier »</mark>',
+			correctResponse: 'I am downloading a file',
+			tokens: [
+				'File',
+				'Am',
+				'You',
+				'I',
+				'Uploading',
+				'A',
+				'Computer',
+				'Were',
+				'Was',
+				'Downloading',
+				'The',
+				'Document',
+				'Are'
+			],
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'tokenSelect',
+			question:
+				'Translate the following sentence into English: <mark>« Je suis développeur »</mark>',
+			correctResponse: 'I am a developer',
+			tokens: ['A', 'Developer', 'I', 'Am', 'An', 'Programmer', 'Engineer', 'Were', 'You', 'Was'],
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'tokenSelect',
+			question:
+				'Translate the following sentence into English: <mark>« Je suis en train de travailler sur mon ordinateur »</mark>',
+			correctResponse: 'I am working on my computer',
+			tokens: ['On', 'Working', 'I', 'Am', 'My', 'Computer', 'A', 'The', 'You', 'Were', 'Was'],
+			exactResponseOnly: false,
+			responseCaseSensitive: false
+		},
+		{
+			type: 'tokenSelect',
+			question:
+				'Translate the following phrase into English: <mark>« enregistrer un fichier »</mark>',
+			correctResponse: 'Save a file',
+			tokens: ['File', 'A', 'Save', 'The', 'Document', 'Upload', 'Download', 'My', 'Your'],
+			exactResponseOnly: false,
+			responseCaseSensitive: false
 		}
-	];
+	].sort(() => Math.random() - 0.5);
 
 	let currentExercise = 0;
 	let hasSubmitted = false;
@@ -165,8 +216,7 @@
 		}
 	}
 
-	// if control/cmnd + enter is pressed, submit the answer
-	// handle mac and windows
+	// if control/cmnd + enter is pressed, submit the answer; handled on mac and windows
 	function handleKeydown(event: KeyboardEvent) {
 		if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
 			if (hasSubmitted) {
@@ -199,20 +249,31 @@
 	{/if}
 	<main>
 		{#if currentExercise < exercises.length}
-			{#if exercises[currentExercise]?.type === 'multipleSelect'}
-				<MultipleSelectExercise
-					options={exercises[currentExercise].options}
-					bind:value={answer}
-					disabled={hasSubmitted}
-					randomize={!exercises[currentExercise].keepOrder}
-				>
-					<span slot="question">{@html exercises[currentExercise].question || ''}</span>
-				</MultipleSelectExercise>
-			{:else if exercises[currentExercise]?.type === 'freeResponse'}
-				<FreeResponseExercise bind:value={answer} disabled={hasSubmitted}>
-					<span slot="question">{@html exercises[currentExercise].question || ''}</span>
-				</FreeResponseExercise>
-			{/if}
+			{#key currentExercise}
+				{#if exercises[currentExercise]?.type === 'multipleSelect'}
+					<MultipleSelectExercise
+						options={exercises[currentExercise].options}
+						bind:value={answer}
+						disabled={hasSubmitted}
+						randomize={!exercises[currentExercise].keepOrder}
+					>
+						<span slot="question">{@html exercises[currentExercise].question || ''}</span>
+					</MultipleSelectExercise>
+				{:else if exercises[currentExercise]?.type === 'freeResponse'}
+					<FreeResponseExercise bind:value={answer} disabled={hasSubmitted}>
+						<span slot="question">{@html exercises[currentExercise].question || ''}</span>
+					</FreeResponseExercise>
+				{:else if exercises[currentExercise]?.type === 'tokenSelect'}
+					<TokenSelectExercise
+						bind:value={answer}
+						disabled={hasSubmitted}
+						tokens={exercises[currentExercise].tokens}
+						randomize={!exercises[currentExercise].keepOrder}
+					>
+						<span slot="question">{@html exercises[currentExercise].question || ''}</span>
+					</TokenSelectExercise>
+				{/if}
+			{/key}
 		{:else}
 			<Container>
 				<Card>
@@ -267,6 +328,7 @@
 	header {
 		position: sticky;
 		top: 0;
+		z-index: 1;
 		background: var(--color-background);
 	}
 
