@@ -29,6 +29,8 @@
 	--color-light-blue: #74a6c8;
 	--color-light-turquoise: #99ddd0;
 	--color-raspberry: #c34ca9;
+	--color-dark-green: #166235;
+	--color-dark-red: #421510;
 
 	// theme
 	--color-background: var(--color-dark-gray);
@@ -36,6 +38,8 @@
 	--color-background-alt-light: var(--color-light-gray);
 	--color-background-gradient-start: var(--color-dark-gray);
 	--color-background-gradient-stop: var(--color-dark-blue);
+	--color-background-success: var(--color-dark-green);
+	--color-background-error: var(--color-dark-red);
 
 	--color-text: var(--color-flat-clouds);
 	--color-text-gradient-start: var(--color-flat-sun-flower);
@@ -53,6 +57,8 @@
 	--color-warning-dark: var(--color-flat-orange);
 	--color-danger: var(--color-flat-alizarin);
 	--color-danger-dark: var(--color-flat-pomegranate);
+	--color-error: var(--color-flat-alizarin);
+	--color-error-dark: var(--color-flat-pomegranate);
 	--color-neutral: var(--color-flat-concrete);
 	--color-disabled: var(--color-flat-concrete);
 	--color-disabled-dark: var(--color-flat-asbestos);

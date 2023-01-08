@@ -103,7 +103,6 @@
 	}
 
 	button.card {
-		outline: none;
 		cursor: pointer;
 		opacity: 0.8;
 		transition: opacity 0.2s ease-in-out;
