@@ -73,6 +73,12 @@
 <style lang="scss">
 	@use '$lib/styles/_breakpoints.scss' as *;
 
+	.quizExample {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
 	.responseRating {
 		font-size: var(--font-size-lg);
 	}
@@ -80,6 +86,7 @@
 	header {
 		position: sticky;
 		top: 0;
+		background: var(--color-background);
 	}
 
 	main {
@@ -88,11 +95,11 @@
 	}
 
 	footer {
-		position: fixed;
+		position: sticky;
 		bottom: 0;
-		box-shadow: var(--box-shadow-top);
 		width: 100%;
 		background: var(--color-background-alt);
+		box-shadow: var(--box-shadow-top);
 	}
 
 	.footer-inner {
