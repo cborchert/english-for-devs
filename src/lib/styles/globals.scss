@@ -152,11 +152,17 @@ textarea {
 
 label {
 	display: block;
-	margin-bottom: var(--space-sm);
+	margin-bottom: var(--space-md);
 }
 
 fieldset {
 	border: none;
 	padding: var(--space-md);
 	margin: 0;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }

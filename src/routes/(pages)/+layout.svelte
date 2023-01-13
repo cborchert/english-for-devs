@@ -2,10 +2,23 @@
 	import Container from '$lib/components/atoms/Container.svelte';
 </script>
 
-<header />
-<main>
-	<Container>
+<div class="page">
+	<header />
+	<main>
 		<slot />
-	</Container>
-</main>
-<footer />
+	</main>
+	<footer />
+</div>
+
+<style>
+	.page {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+	main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+</style>

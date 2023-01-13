@@ -1,12 +1,20 @@
-<div {...$$restProps}>
+<script lang="ts">
+	export let size: 'sm' | 'lg' = 'lg';
+</script>
+
+<div class={size} {...$$restProps}>
 	<slot />
 </div>
 
-<style>
+<style lang="scss">
 	div {
 		margin: 0 auto;
 		max-width: var(--width-xxl);
 		width: 100%;
 		padding: var(--space-lg) var(--space);
+
+		&.sm {
+			max-width: var(--width-lg);
+		}
 	}
 </style>
