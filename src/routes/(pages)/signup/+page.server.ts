@@ -1,15 +1,51 @@
+import { z } from 'zod';
+
 import type { Actions } from './$types';
-import { redirect, error } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
+
+import forms from '$lib/translations/forms.json';
+import interpolate from '$lib/scripts/interpolate';
+
+const signupSchema = z
+	.object({
+		email: z.string({ required_error: forms.required }).email({ message: forms.invalidEmail }),
+		password: z
+			.string({ required_error: forms.required })
+			.min(8, { message: interpolate(forms.passwordTooShort, { length: 8 }) }),
+		passwordConfirm: z
+			.string({ required_error: forms.required })
+			.min(8, { message: interpolate(forms.passwordTooShort, { length: 8 }) })
+	})
+	.refine(({ password, passwordConfirm }) => password === passwordConfirm, {
+		message: forms.passwordsDontMatch,
+		path: ['passwordConfirm']
+	});
 
 export const actions: Actions = {
 	register: async ({ locals, request }) => {
 		const body = Object.fromEntries(await request.formData());
+
 		try {
-			await locals.authClient.collection('users').create(body);
-			await locals.authClient.collection('users').requestVerification(body.email);
+			// validate the form data
+			const validatedBody = signupSchema.safeParse(body);
+			if (!validatedBody.success) {
+				const { fieldErrors: errors } = validatedBody.error.flatten();
+				const { password, passwordConfirm, ...bodyData } = body;
+				console.log({ errors });
+				return fail(400, {
+					data: bodyData,
+					errors
+				});
+			}
+
+			// create the user
+			await locals.authClient.collection('users').create(validatedBody.data);
+			await locals.authClient.collection('users').requestVerification(validatedBody.data.email);
 		} catch (err) {
 			console.error(err);
-			throw error(500, 'Error creating user');
+			return fail(400, {
+				generalErrorMessage: forms.signupError
+			});
 		}
 		throw redirect(303, '/signup/confirmation?email=' + body.email);
 	}

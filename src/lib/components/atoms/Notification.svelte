@@ -8,7 +8,7 @@
 
 <style>
 	div {
-		padding: var(--space) var(--space-lg);
+		padding: var(--space-sm) var(--space);
 		border-radius: var(--border-radius);
 		font-size: var(--font-size-sm);
 	}

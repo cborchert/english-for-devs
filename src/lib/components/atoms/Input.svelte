@@ -8,6 +8,8 @@
 	let inputType: string = 'text';
 	export { inputType as type };
 
+	export let error: string = '';
+
 	let currentType = inputType;
 	const togglePasswordVisibility = () => {
 		currentType = currentType === 'password' ? 'text' : 'password';
@@ -29,6 +31,7 @@
 			on:click
 			on:focus
 			on:keypress
+			class:isError={!!error}
 			{...$$restProps}
 		/>
 		{#if inputType === 'password'}
@@ -41,12 +44,22 @@
 			</button>
 		{/if}
 	</div>
+	{#if error}
+		<p class="errorMessage">{error}</p>
+	{/if}
 </label>
 
 <style lang="scss">
 	input {
 		width: 100%;
 		display: block;
+		&.isError {
+			border-color: var(--color-error);
+		}
+	}
+	.errorMessage {
+		color: var(--color-error);
+		font-size: var(--font-size-sm);
 	}
 	div {
 		position: relative;

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+
 	import type { ActionData, PageData } from './$types';
 	import AccentText from '$lib/components/atoms/AccentText.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
@@ -8,7 +10,6 @@
 	import Notification from '$lib/components/atoms/Notification.svelte';
 
 	export let form: ActionData;
-	// mot de passe oublié ? reinitialiser le mot de passe
 	export let data: PageData;
 </script>
 
@@ -18,13 +19,20 @@
 			{#if !data.user}
 				<h1><AccentText>Connexion</AccentText></h1>
 				<p>Vous n'avez pas de compte ? <a href="/signup">Inscrivez-vous</a>.</p>
-				<form action="?/login" method="POST">
-					<Input label="adresse mail" type="email" name="email" placeholder="adresse mail" />
+				<form action="?/login" method="POST" use:enhance>
+					<Input
+						label="adresse mail"
+						type="email"
+						name="email"
+						placeholder="adresse mail"
+						error={form?.errors?.email?.[0]}
+					/>
 					<Input
 						label="mot de passe"
 						type={'password'}
 						name="password"
 						placeholder="mot de passe"
+						error={form?.errors?.password?.[0]}
 					/>
 					<p>
 						Mot de passe oublié ? <a href="/login/resetPassword">Reinitialisez votre mot de passe</a
@@ -47,6 +55,11 @@
 					<Button type="submit">Déconnexion</Button>
 				</form>
 			{/if}
+			{#if form?.generalErrorMessage}
+				<div class="generalErrorMessage">
+					<Notification type="error">{form.generalErrorMessage}</Notification>
+				</div>
+			{/if}
 		</Card>
 	</Container>
 </div>
@@ -57,5 +70,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+	.generalErrorMessage {
+		margin-top: var(--space-lg);
 	}
 </style>

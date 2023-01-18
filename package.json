@@ -19,6 +19,7 @@
 		"@typescript-eslint/parser": "^5.45.0",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-simple-import-sort": "^9.0.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
@@ -32,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.10.0"
+		"pocketbase": "^0.10.0",
+		"zod": "^3.20.2"
 	}
 }
