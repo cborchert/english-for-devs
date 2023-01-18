@@ -30,7 +30,7 @@
 	</div>
 	<div>
 		<p><em><mark>Output preview</mark></em></p>
-		<div>{@html rendered}</div>
+		<div class="preview">{@html rendered}</div>
 	</div>
 </div>
 <div />
@@ -50,5 +50,16 @@
 	}
 	p {
 		margin: 0;
+	}
+	textarea,
+	.preview {
+		height: 400px;
+		overflow: auto;
+	}
+
+	.preview {
+		border: 2px solid var(--color-background-alt-light);
+		padding: var(--space);
+		border-radius: var(--border-radius);
 	}
 </style>
