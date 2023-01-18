@@ -11,7 +11,7 @@
 		| 'success'
 		| 'neutral'
 		| 'ghost' = 'primary';
-	export let size: 'small' | 'medium' | 'large' = 'medium';
+	export let size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
 	export let disabled: boolean = false;
 
 	const dispatch = createEventDispatcher();
@@ -28,12 +28,18 @@
 	};
 
 	const sizeClassNames = {
+		xsmall: 'button--xsmall',
 		small: 'button--small',
 		medium: 'button--medium',
 		large: 'button--large'
 	};
 
-	const className = ['button', variantClassNames[variant], sizeClassNames[size]].join(' ');
+	const className = [
+		'button',
+		'no-underline',
+		variantClassNames[variant],
+		sizeClassNames[size]
+	].join(' ');
 
 	// tag is determined by the presence of an href
 	const tag: 'button' | 'a' = href ? 'a' : 'button';
@@ -113,6 +119,10 @@
 
 		&.button--neutral {
 			background: var(--color-neutral);
+		}
+
+		&.button--xsmall {
+			padding: var(--space-xs) var(--space);
 		}
 
 		&.button--small {

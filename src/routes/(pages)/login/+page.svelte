@@ -1,47 +1,51 @@
 <script lang="ts">
-	import type { KeyboardEventHandler } from 'svelte/elements';
-	import { currentUser, login, logout } from '$lib/scripts/db/client';
+	import type { ActionData, PageData } from './$types';
 	import AccentText from '$lib/components/atoms/AccentText.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Card from '$lib/components/atoms/Card.svelte';
 	import Container from '$lib/components/atoms/Container.svelte';
 	import Input from '$lib/components/atoms/Input.svelte';
+	import Notification from '$lib/components/atoms/Notification.svelte';
 
-	let userName = '';
-	let password = '';
-	let passwordVisible = false;
-
-	const handleSubmit = () => login(userName, password);
+	export let form: ActionData;
+	// mot de passe oublié ? reinitialiser le mot de passe
+	export let data: PageData;
 </script>
 
 <div class="login">
 	<Container size="sm">
 		<Card>
-			{#if !$currentUser}
-				<h1><AccentText>Login</AccentText></h1>
-				<form on:submit|preventDefault={handleSubmit}>
-					<Input
-						label="adresse mail"
-						type="email"
-						name="email"
-						placeholder="adresse mail"
-						bind:value={userName}
-						on:input={console.log}
-					/>
+			{#if !data.user}
+				<h1><AccentText>Connexion</AccentText></h1>
+				<p>Vous n'avez pas de compte ? <a href="/signup">Inscrivez-vous</a>.</p>
+				<form action="?/login" method="POST">
+					<Input label="adresse mail" type="email" name="email" placeholder="adresse mail" />
 					<Input
 						label="mot de passe"
-						type={passwordVisible ? 'text' : 'password'}
+						type={'password'}
 						name="password"
 						placeholder="mot de passe"
-						bind:value={password}
 					/>
-					<Button type="submit">Submit</Button>
-					<p>Vous n'avez pas de compte ? <a href="/signup">Inscrivez-vous</a>.</p>
+					<p>
+						Mot de passe oublié ? <a href="/login/resetPassword">Reinitialisez votre mot de passe</a
+						>.
+					</p>
+					<Button type="submit">Connexion</Button>
 				</form>
+				{#if form?.unverifiedAccount}
+					<Notification type="error">
+						Votre compte n'a pas encore été vérifié. Veuillez vérifier votre boîte mail. <a
+							href="/login/resendVerificationEmail"
+							class="is-color-text">Renvoyer l'email de vérification</a
+						>
+					</Notification>
+				{/if}
 			{:else}
 				<h3><AccentText>Vous êtes connecté(e)</AccentText></h3>
-				<p>email: {$currentUser.email}</p>
-				<Button on:click={logout}>Signout</Button>
+				<p>Vous êtes actuellement connecté(e) avec l'adresse mail : {data.user.email}</p>
+				<form action="?/logout" method="POST">
+					<Button type="submit">Déconnexion</Button>
+				</form>
 			{/if}
 		</Card>
 	</Container>

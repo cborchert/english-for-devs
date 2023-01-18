@@ -6,7 +6,12 @@
 // and what to do when importing types
 declare namespace App {
 	// interface Error {}
-	// interface Locals {}
+	interface Locals {
+		// TODO: type this properly using the PocketBase types
+		user: any;
+		// TODO: type this properly using the PocketBase types
+		authClient: any;
+	}
 	// interface PageData {}
 	// interface Platform {}
 }

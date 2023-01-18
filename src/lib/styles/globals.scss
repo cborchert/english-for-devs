@@ -74,14 +74,10 @@ blockquote {
 
 a,
 .link {
-	color: var(--color-primary-dark);
+	color: var(--color-primary);
 	text-decoration: none;
 
 	@extend .with-animated-underline;
-
-	&:hover {
-		color: var(--color-primary);
-	}
 
 	&.large-underline {
 		&:after {
@@ -99,6 +95,9 @@ a,
 		&,
 		&:hover {
 			color: var(--color-text);
+			&::after {
+				background-color: var(--color-text);
+			}
 		}
 	}
 
