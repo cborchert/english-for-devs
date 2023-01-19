@@ -44,4 +44,5 @@ Check the readme in `_backend/` for more information on how to deploy to fly.io.
 
 We're deploying to netlify without any special set up so we're sticking with the default adapter (`adapter-auto`). A netlify.toml file is included in the project root.
 
+Don't forget to set up a `VITE_POCKETBASE_URL` environment variable in the netlify UI.
 
