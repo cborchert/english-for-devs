@@ -36,7 +36,7 @@ You can preview the production build with `npm run preview`.
 
 ## Deploying the pocketbase backend
 
-Check the readme in `_backend/` for more information on how to deploy to fly.io.
+Check the readme in `_pocketbase/` for more information on how to deploy to fly.io.
 
 ## Deploying the sveltekit app
 
