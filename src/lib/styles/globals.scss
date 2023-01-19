@@ -125,7 +125,8 @@ input[type='datetime-local'],
 input[type='month'],
 input[type='week'],
 input[type='time'],
-input[type='color'] {
+input[type='color'],
+select {
 	background: var(--color-background-alt);
 	border: 2px solid var(--color-background-alt-light);
 	border-radius: var(--border-radius);
@@ -164,4 +165,8 @@ fieldset {
 *::before,
 *::after {
 	box-sizing: border-box;
+}
+
+.no-margin {
+	margin: 0;
 }

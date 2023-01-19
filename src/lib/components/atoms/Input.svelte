@@ -9,8 +9,11 @@
 	export { inputType as type };
 
 	export let error: string = '';
+	export let noMargin: boolean = false;
 
 	let currentType = inputType;
+	$: tag = inputType === 'textarea' ? 'textarea' : 'input';
+	$: additionalProps = inputType === 'textarea' ? { rows: 3 } : { type: inputType };
 	const togglePasswordVisibility = () => {
 		currentType = currentType === 'password' ? 'text' : 'password';
 	};
@@ -20,11 +23,11 @@
 	};
 </script>
 
-<label>
+<label class:noMargin>
 	{label}
 	<div>
-		<input
-			type={currentType}
+		<svelte:element
+			this={tag}
 			on:input={handleOnInput}
 			on:blur
 			on:change
@@ -33,6 +36,7 @@
 			on:keypress
 			class:isError={!!error}
 			{...$$restProps}
+			{...additionalProps}
 		/>
 		{#if inputType === 'password'}
 			<button on:click={togglePasswordVisibility} type="button">
@@ -53,9 +57,12 @@
 	input {
 		width: 100%;
 		display: block;
-		&.isError {
-			border-color: var(--color-error);
-		}
+	}
+	label.noMargin {
+		margin-bottom: 0;
+	}
+	.isError {
+		border-color: var(--color-error);
 	}
 	.errorMessage {
 		color: var(--color-error);

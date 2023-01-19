@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let size: 'sm' | 'lg' = 'lg';
+	export let size: 'sm' | 'lg' | 'xl' = 'lg';
 </script>
 
 <div class={size} {...$$restProps}>
@@ -15,6 +15,10 @@
 
 		&.sm {
 			max-width: var(--width-lg);
+		}
+
+		&.xl {
+			max-width: var(--width-xl);
 		}
 	}
 </style>
