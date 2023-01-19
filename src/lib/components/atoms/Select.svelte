@@ -18,7 +18,7 @@
 			on:focus
 			on:keypress
 			class:isError={!!error}
-			{value}
+			bind:value
 			{...$$restProps}
 		>
 			{#each options as option}

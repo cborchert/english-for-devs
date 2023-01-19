@@ -10,7 +10,7 @@ declare namespace App {
 		// TODO: type this properly using the PocketBase types
 		user: any;
 		// TODO: type this properly using the PocketBase types
-		authClient: any;
+		pb: any;
 	}
 	// interface PageData {}
 	// interface Platform {}

@@ -5,7 +5,7 @@ export const actions: Actions = {
 	sendVerificationEmail: async ({ locals, request }) => {
 		const body = Object.fromEntries(await request.formData());
 		try {
-			await locals.authClient.collection('users').requestVerification(body.email);
+			await locals.pb.collection('users').requestVerification(body.email);
 			return {
 				success: true
 			};

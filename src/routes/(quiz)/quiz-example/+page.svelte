@@ -4,9 +4,9 @@
 	import Container from '$lib/components/atoms/Container.svelte';
 	import AccentText from '$lib/components/atoms/AccentText.svelte';
 	import ProgressBar from '$lib/components/atoms/ProgressBar.svelte';
-	import MultipleSelectExercise from '$lib/components/molecules/exercises/MultipleSelectExercise.svelte';
-	import FreeResponseExercise from '$lib/components/molecules/exercises/FreeResponseExercise.svelte';
-	import TokenSelectExercise from '$lib/components/molecules/exercises/TokenSelectExercise.svelte';
+	import MultipleChoice from '$lib/components/molecules/questions/MultipleChoice.svelte';
+	import FreeResponse from '$lib/components/molecules/questions/FreeResponse.svelte';
+	import AssistedResponse from '$lib/components/molecules/questions/AssistedResponse.svelte';
 
 	const exercises = [
 		{
@@ -251,27 +251,27 @@
 		{#if currentExercise < exercises.length}
 			{#key currentExercise}
 				{#if exercises[currentExercise]?.type === 'multipleSelect'}
-					<MultipleSelectExercise
+					<MultipleChoice
 						options={exercises[currentExercise].options}
 						bind:value={answer}
 						disabled={hasSubmitted}
 						randomize={!exercises[currentExercise].keepOrder}
 					>
 						<span slot="question">{@html exercises[currentExercise].question || ''}</span>
-					</MultipleSelectExercise>
+					</MultipleChoice>
 				{:else if exercises[currentExercise]?.type === 'freeResponse'}
-					<FreeResponseExercise bind:value={answer} disabled={hasSubmitted}>
+					<FreeResponse bind:value={answer} disabled={hasSubmitted}>
 						<span slot="question">{@html exercises[currentExercise].question || ''}</span>
-					</FreeResponseExercise>
+					</FreeResponse>
 				{:else if exercises[currentExercise]?.type === 'tokenSelect'}
-					<TokenSelectExercise
+					<AssistedResponse
 						bind:value={answer}
 						disabled={hasSubmitted}
 						tokens={exercises[currentExercise].tokens}
 						randomize={!exercises[currentExercise].keepOrder}
 					>
 						<span slot="question">{@html exercises[currentExercise].question || ''}</span>
-					</TokenSelectExercise>
+					</AssistedResponse>
 				{/if}
 			{/key}
 		{:else}

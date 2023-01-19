@@ -39,8 +39,8 @@ export const actions: Actions = {
 			}
 
 			// create the user
-			await locals.authClient.collection('users').create(validatedBody.data);
-			await locals.authClient.collection('users').requestVerification(validatedBody.data.email);
+			await locals.pb.collection('users').create(validatedBody.data);
+			await locals.pb.collection('users').requestVerification(validatedBody.data.email);
 		} catch (err) {
 			console.error(err);
 			return fail(400, {

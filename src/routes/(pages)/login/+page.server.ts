@@ -26,13 +26,13 @@ export const actions: Actions = {
 				});
 			}
 
-			await locals.authClient
+			await locals.pb
 				.collection('users')
 				.authWithPassword(validatedBody.data.email, validatedBody.data.password);
 
 			// if the user is not verified, clear the authStore, logging them out
-			if (!locals.authClient.authStore.model.verified) {
-				locals.authClient.authStore.clear();
+			if (!locals.pb.authStore.model.verified) {
+				locals.pb.authStore.clear();
 				return {
 					unverifiedAccount: true
 				};
@@ -46,7 +46,7 @@ export const actions: Actions = {
 		throw redirect(303, '/');
 	},
 	logout: async ({ locals }) => {
-		locals.authClient.authStore.clear();
+		locals.pb.authStore.clear();
 		throw redirect(303, '/login');
 	}
 };

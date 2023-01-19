@@ -5,7 +5,7 @@ export const actions: Actions = {
 	resetPassword: async ({ locals, request }) => {
 		const body = Object.fromEntries(await request.formData());
 		try {
-			await locals.authClient.collection('users').requestPasswordReset(body.email);
+			await locals.pb.collection('users').requestPasswordReset(body.email);
 			return {
 				success: true
 			};
