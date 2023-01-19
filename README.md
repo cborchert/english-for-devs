@@ -1,29 +1,28 @@
-# create-svelte
+# English for devs
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+*Built with create-svelte*
 
-## Creating a project
+## Getting started
 
-If you're seeing this, you've probably already done this step. Congrats!
+Install the dependencies with `npm install` (or `pnpm install` or `yarn`);
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### Spin up the pocketbase instance
 
-# create a new project in my-app
-npm create svelte@latest my-app
+```bash 
+docker build -t english-for-devs ./_backend/Dockerfile ## First time only
+docker run -it --rm -p 8090:8090 -v $(pwd)/pb_data:/pb/pb_data -v $(pwd)/pb_public:/pb/pb_public english-for-devs
 ```
 
-## Developing
+Go to http://localhost:8090/_ to complete the installation. Don't forget to set up the mail settings. 
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Set up the environment variables in `.env`:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+VITE_POCKETBASE_URL=http://127.0.0.1:8090
 ```
+
+Start the dev server with `npm run dev` (or `pnpm dev` or `yarn dev`).
+
 
 ## Building
 
@@ -35,4 +34,14 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
+## Deploying the pocketbase backend
+
+Check the readme in `_backend/` for more information on how to deploy to fly.io.
+
+## Deploying the sveltekit app
+
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+We're deploying to netlify without any special set up so we're sticking with the default adapter (`adapter-auto`). A netlify.toml file is included in the project root.
+
+
