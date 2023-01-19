@@ -12,8 +12,7 @@
 	export let noMargin: boolean = false;
 
 	let currentType = inputType;
-	$: tag = inputType === 'textarea' ? 'textarea' : 'input';
-	$: additionalProps = inputType === 'textarea' ? { rows: 3 } : { type: inputType };
+
 	const togglePasswordVisibility = () => {
 		currentType = currentType === 'password' ? 'text' : 'password';
 	};
@@ -21,6 +20,9 @@
 	const handleOnInput: FormEventHandler<HTMLInputElement> = (e) => {
 		value = (e?.target as HTMLInputElement)?.value || '';
 	};
+
+	$: tag = inputType === 'textarea' ? 'textarea' : 'input';
+	$: additionalProps = inputType === 'textarea' ? { rows: 3 } : { type: currentType };
 </script>
 
 <label class:noMargin>
