@@ -1,10 +1,6 @@
 <script lang="ts">
-	import { unified } from 'unified';
-	import remarkParse from 'remark-parse';
-	import remarkGfm from 'remark-gfm';
-	import remarkRehype from 'remark-rehype';
-	import rehypeStringify from 'rehype-stringify';
 	import Input from '../atoms/Input.svelte';
+	import { getMarkdownProcessor } from '$lib/scripts/questions';
 
 	export let size: number = 400;
 	export let value: string = '';
@@ -12,13 +8,8 @@
 	export let label: string = '';
 	export let error: string = '';
 
-	const processor = unified()
-		.use(remarkParse)
-		.use(remarkGfm)
-		.use(remarkRehype, { allowDangerousHtml: true })
-		.use(rehypeStringify, { allowDangerousHtml: true });
-
-	$: rendered = processor.processSync(value).toString();
+	const processor = getMarkdownProcessor();
+	$: rendered = processor.render(value);
 </script>
 
 <div class="markdownEditor">

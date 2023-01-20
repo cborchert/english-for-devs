@@ -1,45 +1,72 @@
 <script lang="ts">
-	import type { FormEventHandler } from 'svelte/elements';
 	import IconEye from '~icons/ph/eye';
 	import IconEyeClosed from '~icons/ph/eye-closed';
 
 	export let label: string = '';
 	export let value: string = '';
-	let inputType: string = 'text';
-	export { inputType as type };
-
 	export let error: string = '';
 	export let noMargin: boolean = false;
 
+	let inputType: string = 'text';
+	export { inputType as type };
 	let currentType = inputType;
 
 	const togglePasswordVisibility = () => {
 		currentType = currentType === 'password' ? 'text' : 'password';
 	};
 
-	const handleOnInput: FormEventHandler<HTMLInputElement> = (e) => {
-		value = (e?.target as HTMLInputElement)?.value || '';
-	};
-
-	$: tag = inputType === 'textarea' ? 'textarea' : 'input';
-	$: additionalProps = inputType === 'textarea' ? { rows: 3 } : { type: currentType };
+	$: additionalProps = { type: currentType };
 </script>
 
 <label class:noMargin>
 	{label}
 	<div>
-		<svelte:element
-			this={tag}
-			on:input={handleOnInput}
-			on:blur
-			on:change
-			on:click
-			on:focus
-			on:keypress
-			class:isError={!!error}
-			{...$$restProps}
-			{...additionalProps}
-		/>
+		{#if currentType === 'textarea'}
+			<textarea
+				on:input
+				bind:value
+				on:blur
+				on:change
+				on:click
+				on:focus
+				on:keypress
+				on:keydown
+				on:keyup
+				class:isError={!!error}
+				rows={3}
+				{...$$restProps}
+			/>
+		{:else if currentType === 'password'}
+			<input
+				on:input
+				bind:value
+				on:blur
+				on:change
+				on:click
+				on:focus
+				on:keypress
+				on:keydown
+				on:keyup
+				class:isError={!!error}
+				type="password"
+				{...$$restProps}
+			/>
+		{:else}
+			<input
+				on:input
+				bind:value
+				on:blur
+				on:change
+				on:click
+				on:focus
+				on:keypress
+				on:keydown
+				on:keyup
+				class:isError={!!error}
+				{...additionalProps}
+				{...$$restProps}
+			/>
+		{/if}
 		{#if inputType === 'password'}
 			<button on:click={togglePasswordVisibility} type="button">
 				{#if currentType === 'password'}

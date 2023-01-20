@@ -30,7 +30,13 @@ export const actions: Actions = {
 		};
 		try {
 			const record = await locals.pb.collection('questions').create(data);
-			console.log(record);
+			if (!record) {
+				throw new Error('Question not created');
+			}
+			return {
+				message: 'Question created successfully',
+				success: true
+			};
 		} catch (err) {
 			console.error(err);
 			return fail(400, { message: 'Error creating question' });

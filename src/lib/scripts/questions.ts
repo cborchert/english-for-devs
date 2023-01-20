@@ -1,3 +1,9 @@
+import rehypeStringify from 'rehype-stringify';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+
 export const QUESTION_TYPES = Object.freeze({
 	MULTIPLE_CHOICE: 'multipleChoice',
 	FREE_RESPONSE: 'freeResponse',
@@ -27,10 +33,21 @@ export function checkResponse(
 		: correctResponses.map((a) => a.toLowerCase());
 	if (!exactResponseOnly) {
 		// remove all punctuation marks
-		transformedResponse = transformedResponse.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').trim();
+		transformedResponse = transformedResponse.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '').trim();
 		transformedCorrectResponses = transformedCorrectResponses.map((a) =>
-			a.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').trim()
+			a.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '').trim()
 		);
 	}
 	return transformedCorrectResponses.includes(transformedResponse);
 }
+
+export const getMarkdownProcessor = () => ({
+	processor: unified()
+		.use(remarkParse)
+		.use(remarkGfm)
+		.use(remarkRehype, { allowDangerousHtml: true })
+		.use(rehypeStringify, { allowDangerousHtml: true }),
+	render: function (markdown: string) {
+		return this.processor.processSync(markdown).toString();
+	}
+});
