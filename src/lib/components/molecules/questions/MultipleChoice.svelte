@@ -2,7 +2,7 @@
 	import Card from '$lib/components/atoms/Card.svelte';
 	import Container from '$lib/components/atoms/Container.svelte';
 
-	export let options: Array<{ value: string; text: any }> = [];
+	export let options: string[] = [];
 	export let randomize: boolean = true;
 	export let value: string | undefined = undefined;
 	export let disabled: boolean = false;
@@ -25,15 +25,15 @@
 	<p class="h3">
 		<slot name="question" />
 	</p>
-	{#each displayOptions as { value: optionValue, text }}
+	{#each displayOptions as option}
 		<Card
 			on:click={() => {
-				if (!disabled) setValue(optionValue === value ? undefined : optionValue);
+				if (!disabled) setValue(option === value ? undefined : option);
 			}}
-			variant={optionValue === value ? 'light' : undefined}
+			variant={option === value ? 'light' : undefined}
 			asButton
 		>
-			{text}
+			{option}
 		</Card>
 	{/each}
 </Container>

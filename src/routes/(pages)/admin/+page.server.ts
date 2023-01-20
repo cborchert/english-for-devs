@@ -5,23 +5,6 @@ export const load = (async () => {
 	return {};
 }) satisfies PageServerLoad;
 
-// import PocketBase from 'pocketbase';
-
-// const pb = new PocketBase('http://127.0.0.1:8090');
-
-// ...
-
-// // example create data
-// const data = {
-//     "title": "test",
-//     "question": "test",
-//     "questionType": "multipleChoice",
-//     "options": "JSON",
-//     "answers": "JSON"
-// };
-
-// const record = await pb.collection('questions').create(data);
-
 export const actions: Actions = {
 	createQuestion: async ({ locals, request }) => {
 		const { title, question, questionType, ...restBody } = Object.fromEntries(

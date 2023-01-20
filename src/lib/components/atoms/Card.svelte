@@ -36,9 +36,10 @@
 	$: variantClassName = variant ? variantClassNames[variant] : '';
 	$: className = ['card', variantClassName].join(' ');
 	$: tag = asButton ? 'button' : 'div';
+	$: restCardProps = { ...$$restProps, ...(asButton ? { type: 'button' } : undefined) };
 </script>
 
-<svelte:element this={tag} class={className} on:click={() => dispatch('click')} {...$$restProps}>
+<svelte:element this={tag} class={className} on:click={() => dispatch('click')} {...restCardProps}>
 	<slot />
 </svelte:element>
 

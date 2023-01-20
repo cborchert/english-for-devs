@@ -3,39 +3,39 @@
 	import Container from '$lib/components/atoms/Container.svelte';
 	import { onMount } from 'svelte';
 
-	export let tokens: Array<string> = [];
+	export let options: Array<string> = [];
 	export let randomize: boolean = true;
 	export let value: string | undefined = undefined;
 	export let disabled: boolean = false;
 
-	let displayTokens: Array<{ text: string; id: number }> = [];
+	let displayOptions: Array<{ text: string; id: number }> = [];
 
 	onMount(() => {
 		if (randomize) {
-			displayTokens = tokens
+			displayOptions = options
 				.sort(() => Math.random() - 0.5)
-				.map((token, id) => ({
-					text: token,
+				.map((option, id) => ({
+					text: option,
 					id
 				}));
 		} else {
-			displayTokens = tokens.map((token, id) => ({
-				text: token,
+			displayOptions = options.map((option, id) => ({
+				text: option,
 				id
 			}));
 		}
 	});
 
-	let selectedTokens: Array<{ text: string; id: number }> = [];
+	let selectedOptions: Array<{ text: string; id: number }> = [];
 
-	$: value = selectedTokens.map((t) => t.text).join(' ');
+	$: value = selectedOptions.map((t) => t.text).join(' ');
 
-	function toggleToken(token: { text: string; id: number }) {
+	function toggleOption(option: { text: string; id: number }) {
 		if (!disabled) {
-			if (selectedTokens.some((t) => t.id === token.id)) {
-				selectedTokens = selectedTokens.filter((t) => t.id !== token.id);
+			if (selectedOptions.some((t) => t.id === option.id)) {
+				selectedOptions = selectedOptions.filter((t) => t.id !== option.id);
 			} else {
-				selectedTokens = [...selectedTokens, token];
+				selectedOptions = [...selectedOptions, option];
 			}
 		}
 	}
@@ -46,9 +46,9 @@
 		<slot name="question" />
 	</p>
 	<p class="selected">
-		{#each selectedTokens as { text, id }}
+		{#each selectedOptions as { text, id }}
 			<Button
-				on:click={() => toggleToken({ text, id })}
+				on:click={() => toggleOption({ text, id })}
 				asButton
 				size="small"
 				variant="tertiary"
@@ -59,15 +59,15 @@
 		{/each}
 	</p>
 	<p>
-		{#each displayTokens as { text, id }}
+		{#each displayOptions as { text, id }}
 			<Button
 				on:click={() => {
-					toggleToken({ text, id });
+					toggleOption({ text, id });
 				}}
 				asButton
 				size="small"
 				variant="ghost"
-				disabled={disabled || selectedTokens.some((t) => t.id === id)}
+				disabled={disabled || selectedOptions.some((t) => t.id === id)}
 			>
 				{text}
 			</Button>
