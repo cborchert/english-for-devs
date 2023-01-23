@@ -1,8 +1,11 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load = (async () => {
-	return {};
+export const load = (async ({ locals }) => {
+	const records = await locals.pb.collection('questions').getFullList(200, {
+		sort: '-created'
+	});
+	return { question: records };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
