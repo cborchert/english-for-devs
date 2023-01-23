@@ -6,10 +6,12 @@
 	export let variant:
 		| 'primary'
 		| 'secondary'
+		| 'secondary-dark'
 		| 'tertiary'
 		| 'gradient'
 		| 'error'
 		| 'success'
+		| 'success-dark'
 		| 'neutral'
 		| 'ghost'
 		| 'light'
@@ -17,13 +19,13 @@
 		| 'gradient-dull'
 		| void = undefined;
 
-	const dispatch = createEventDispatcher();
-
 	const variantClassNames = {
 		primary: 'card--primary',
 		secondary: 'card--secondary',
+		'secondary-dark': 'card--secondary-dark',
 		tertiary: 'card--tertiary',
 		success: 'card--success',
+		'success-dark': 'card--success-dark',
 		error: 'card--error',
 		neutral: 'card--neutral',
 		ghost: 'card--ghost',
@@ -33,13 +35,32 @@
 		dark: 'card--dark'
 	};
 
+	export let padding: 'none' | 'md' = 'md';
+
+	const paddingClassNames = {
+		none: 'card--no-padding',
+		md: ''
+	};
+
+	export let background: string = '';
+
+	$: paddingClassName = padding ? paddingClassNames[padding] : '';
 	$: variantClassName = variant ? variantClassNames[variant] : '';
-	$: className = ['card', variantClassName].join(' ');
+	$: className = ['card', variantClassName, paddingClassName].filter((a) => a).join(' ');
 	$: tag = asButton ? 'button' : 'div';
 	$: restCardProps = { ...$$restProps, ...(asButton ? { type: 'button' } : undefined) };
+	$: style = background ? `background: ${background};` : undefined;
+
+	const dispatch = createEventDispatcher();
 </script>
 
-<svelte:element this={tag} class={className} on:click={() => dispatch('click')} {...restCardProps}>
+<svelte:element
+	this={tag}
+	class={className}
+	{style}
+	on:click={() => dispatch('click')}
+	{...restCardProps}
+>
 	<slot />
 </svelte:element>
 
@@ -47,6 +68,7 @@
 	@use '$lib/styles/_utilities.scss';
 
 	.card {
+		position: relative;
 		display: block;
 		border: none;
 		width: 100%;
@@ -56,6 +78,10 @@
 		border-radius: var(--border-radius);
 		box-shadow: var(--box-shadow);
 		margin: var(--space) auto;
+
+		&.card--no-padding {
+			padding: 0;
+		}
 
 		&.card--gradient {
 			@extend .with-background-gradient-bright;
@@ -81,6 +107,10 @@
 			background: var(--color-secondary);
 		}
 
+		&.card--secondary-dark {
+			background: var(--color-secondary-dark);
+		}
+
 		&.card--tertiary {
 			background: var(--color-tertiary);
 		}
@@ -92,6 +122,10 @@
 
 		&.card--success {
 			background: var(--color-success);
+		}
+
+		&.card--success-dark {
+			background: var(--color-success-dark);
 		}
 
 		&.card--error {

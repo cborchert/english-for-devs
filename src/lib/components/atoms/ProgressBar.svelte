@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let fill: number = 0;
+	export let progress: number = 0;
 	export let variant: 'primary' | 'secondary' | 'tertiary' | 'gradient' = 'primary';
 
 	const variantClassNames = {
@@ -13,7 +13,7 @@
 </script>
 
 <div class={className}>
-	<div class="progress-bar__fill" style="width: {fill}%" />
+	<div class="progress-bar__progress" style="width: {progress}%" />
 </div>
 
 <style lang="scss">
@@ -24,7 +24,7 @@
 		height: 7px;
 		overflow: hidden;
 
-		.progress-bar__fill {
+		.progress-bar__progress {
 			min-width: 0;
 			max-width: 100%;
 			background-color: var(--color-primary);
@@ -33,25 +33,25 @@
 		}
 
 		&.progress-bar--primary {
-			.progress-bar__fill {
+			.progress-bar__progress {
 				background-color: var(--color-primary);
 			}
 		}
 
 		&.progress-bar--secondary {
-			.progress-bar__fill {
+			.progress-bar__progress {
 				background-color: var(--color-secondary);
 			}
 		}
 
 		&.progress-bar--tertiary {
-			.progress-bar__fill {
+			.progress-bar__progress {
 				background-color: var(--color-tertiary);
 			}
 		}
 
 		&.progress-bar--gradient {
-			.progress-bar__fill {
+			.progress-bar__progress {
 				@extend .with-background-gradient-bright;
 			}
 		}

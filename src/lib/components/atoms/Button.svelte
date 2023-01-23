@@ -13,6 +13,7 @@
 		| 'ghost' = 'primary';
 	export let size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
 	export let disabled: boolean = false;
+	export let circle: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -38,7 +39,8 @@
 		'button',
 		'no-underline',
 		variantClassNames[variant],
-		sizeClassNames[size]
+		sizeClassNames[size],
+		circle ? 'button--circle' : ''
 	].join(' ');
 
 	// tag is determined by the presence of an href
@@ -132,6 +134,11 @@
 		&.button--large {
 			padding: var(--space-md) var(--space-xl);
 			font-size: var(--font-size-lg);
+		}
+
+		&.button--circle {
+			border-radius: 50%;
+			padding: var(--space);
 		}
 	}
 </style>
