@@ -1,6 +1,8 @@
 <script lang="ts">
+	import IconCorrect from '~icons/ph/check';
+	import IconError from '~icons/ph/x';
 	import { scale } from 'svelte/transition';
-	import { cubicIn, cubicInOut, elasticIn, elasticOut } from 'svelte/easing';
+	import { cubicIn } from 'svelte/easing';
 
 	import type { PageData } from './$types';
 
@@ -260,9 +262,17 @@
 							}}
 						>
 							{#if answerIsCorrect}
-								<strong>Bravo !</strong>
+								<div class="responseRatingIconContainer">
+									<IconCorrect />
+								</div>
+								<span><strong>Bravo !</strong></span>
 							{:else}
-								La bonne réponse était <strong>&laquo; {answers[0]} &raquo;</strong>
+								<div class="responseRatingIconContainer responseRatingIconContainer_error">
+									<IconError />
+								</div>
+								<span>
+									La bonne réponse était <strong>&laquo; {answers[0]} &raquo;</strong>
+								</span>
 							{/if}
 						</div>
 						<Button variant={answerIsCorrect ? 'success' : 'error'} on:click={next}
@@ -299,6 +309,9 @@
 
 	.responseRating {
 		font-size: var(--font-size-lg);
+		display: flex;
+		align-items: center;
+		gap: var(--space-md);
 	}
 
 	header {
@@ -364,6 +377,19 @@
 
 		@include screen-medium {
 			flex-direction: row;
+		}
+	}
+	.responseRatingIconContainer {
+		position: relative;
+		width: 45px;
+		height: 45px;
+		border-radius: 50%;
+		border: 2px solid var(--color-success);
+		font-size: var(--font-size-xl);
+		font-weight: bold;
+
+		&.responseRatingIconContainer_error {
+			border-color: var(--color-error);
 		}
 	}
 </style>
