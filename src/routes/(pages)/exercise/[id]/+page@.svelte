@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { scale } from 'svelte/transition';
+	import { cubicIn, cubicInOut, elasticIn, elasticOut } from 'svelte/easing';
+
 	import type { PageData } from './$types';
 
 	import { checkResponse, QUESTION_TYPES } from '$lib/scripts/questions';
@@ -247,7 +250,15 @@
 			<Container>
 				<div class="footer-inner">
 					{#if hasSubmitted}
-						<div class="responseRating">
+						<div
+							class="responseRating"
+							in:scale={{
+								duration: 150,
+								opacity: 1,
+								start: 0.7,
+								easing: cubicIn
+							}}
+						>
 							{#if answerIsCorrect}
 								<strong>Bravo !</strong>
 							{:else}
@@ -347,7 +358,12 @@
 	}
 	.modalFooter {
 		display: flex;
+		flex-direction: column;
 		gap: var(--space);
 		justify-content: space-between;
+
+		@include screen-medium {
+			flex-direction: row;
+		}
 	}
 </style>
