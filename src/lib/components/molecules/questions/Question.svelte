@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { getMarkdownProcessor, QUESTION_TYPES, type Question } from '$lib/scripts/questions';
-	import AssistedResponse from './AssistedResponse.svelte';
-	import FreeResponse from './FreeResponse.svelte';
-	import MultipleChoice from './MultipleChoice.svelte';
+	import AssistedResponse from '$lib/components/molecules/questions/AssistedResponse.svelte';
+	import FreeResponse from '$lib/components/molecules/questions/FreeResponse.svelte';
+	import MultipleChoice from '$lib/components/molecules/questions/MultipleChoice.svelte';
 
 	export let question: Question;
 	export let randomizeOptions: boolean = true;

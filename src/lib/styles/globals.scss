@@ -17,7 +17,7 @@ body {
 
 p {
 	margin-bottom: var(--space-md);
-	line-height: 1.75;
+	line-height: 1.5;
 }
 
 h1,
@@ -103,6 +103,7 @@ a,
 
 	&.no-underline {
 		&:after {
+			display: none;
 			height: 0;
 		}
 	}

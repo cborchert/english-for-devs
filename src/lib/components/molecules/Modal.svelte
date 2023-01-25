@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { fly, fade } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	import Container from '../atoms/Container.svelte';
-	import IconClose from '~icons/ph/x';
+	import CloseButton from '../atoms/CloseButton.svelte';
 
 	export let title: string = '';
+	export let size: ContainerSize = 'lg';
 
 	const dispatch = createEventDispatcher();
 
@@ -15,11 +16,11 @@
 </script>
 
 <div class="modalBackground">
-	<Container size="xl">
+	<Container {size}>
 		<div class="modal" transition:fly={{ y: -200, duration: 100 }}>
 			<div class="modalHeader">
 				<div class="modalTitle">{title}</div>
-				<button class="close" on:click={closeHandler}><IconClose /></button>
+				<CloseButton on:click={closeHandler} />
 			</div>
 			<div class="modalBody"><slot /></div>
 		</div>
@@ -28,11 +29,13 @@
 
 <style lang="scss">
 	.modalBackground {
+		z-index: 1;
 		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
 		backdrop-filter: blur(5px);
 		display: flex;
 		flex-direction: column;
@@ -55,19 +58,7 @@
 		align-items: center;
 	}
 	.modalBody {
-		padding: var(--space) 0 0;
+		padding: var(--space) 0;
 		border-radius: var(--border-radius);
-	}
-	.close {
-		padding: 0;
-		background: none;
-		border: none;
-		cursor: pointer;
-		text-align: center;
-		color: var(--color-text);
-		opacity: 0.8;
-		&:hover {
-			opacity: 1;
-		}
 	}
 </style>

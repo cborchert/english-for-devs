@@ -15,3 +15,5 @@ declare namespace App {
 	// interface PageData {}
 	// interface Platform {}
 }
+
+declare type ContainerSize = 'sm' | 'md' | 'lg';

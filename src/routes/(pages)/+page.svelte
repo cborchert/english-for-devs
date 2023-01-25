@@ -19,7 +19,7 @@
 			type: 'exercise',
 			title: 'Exercise 1',
 			progress: 70,
-			href: '#'
+			href: 'exercise/1'
 		},
 		{
 			type: 'exercise',

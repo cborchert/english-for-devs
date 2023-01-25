@@ -77,6 +77,7 @@
 		text-decoration: none;
 		transition: all 0.2s ease-in-out;
 		opacity: 0.9;
+		line-height: initial;
 
 		&:hover,
 		&:active {
