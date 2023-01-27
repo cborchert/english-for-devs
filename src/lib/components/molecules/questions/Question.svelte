@@ -9,13 +9,19 @@
 	export let disabled: boolean = false;
 	export let value: string = '';
 
-	$: ({ questionType, options = [], answers, title, question: questionContent = '' } = question);
+	$: ({
+		questionType,
+		options = [],
+		answers,
+		title,
+		question: questionContent = ''
+	} = question || {});
 	const processor = getMarkdownProcessor();
 	$: rendered = processor.render(questionContent);
 </script>
 
 {#if questionType === QUESTION_TYPES.MULTIPLE_CHOICE}
-	<MultipleChoice {options} bind:value {disabled} randomize={randomizeOptions}>
+	<MultipleChoice {options} bind:value {disabled}>
 		<span slot="question">{@html rendered}</span>
 	</MultipleChoice>
 {:else if questionType === QUESTION_TYPES.FREE_RESPONSE}
@@ -23,7 +29,7 @@
 		<span slot="question">{@html rendered}</span>
 	</FreeResponse>
 {:else if questionType === QUESTION_TYPES.ASSISTED_RESPONSE}
-	<AssistedResponse bind:value {disabled} {options} randomize={randomizeOptions}>
+	<AssistedResponse bind:value {disabled} {options}>
 		<span slot="question">{@html rendered}</span>
 	</AssistedResponse>
 {/if}

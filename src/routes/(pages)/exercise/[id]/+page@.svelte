@@ -162,23 +162,46 @@
 		}
 	].sort(() => Math.random() - 0.5);
 
-	let currentExercise = 0;
+	$: stack = [...exercises];
+
+	let score = 0;
+	let questionsTaken = 0;
+	let totalQuestions = exercises.length;
 	let hasSubmitted = false;
 	let answer: string | undefined = undefined;
 	let answerIsCorrect: boolean = false;
+	let isCloseModalShown: boolean = false;
+
+	$: percentComplete = totalQuestions ? Math.floor((score / totalQuestions) * 100) : 0;
+
+	$: ({ answers, responseCaseSensitive, exactResponseOnly, questionType, options, question } =
+		stack[0] || {});
+	$: currentOptions = options?.sort(() => Math.random() - 0.5);
 
 	function respond(skip: boolean = false) {
 		hasSubmitted = true;
 		if (skip) {
 			answer = undefined;
 		}
+		answerIsCorrect = checkResponse(answer, answers, responseCaseSensitive, exactResponseOnly);
+		if (answerIsCorrect) {
+			score++;
+		}
 	}
 
 	function next() {
+		questionsTaken++;
+		// reorganize the stack
+		const [currentQuestion, ...newStack] = stack;
+		stack = newStack;
+		if (!answerIsCorrect && currentQuestion) {
+			stack = [...stack, currentQuestion];
+		}
+
+		// reset the state
 		hasSubmitted = false;
 		answer = undefined;
 		answerIsCorrect = false;
-		currentExercise++;
 	}
 
 	// if control/cmnd + enter is pressed, submit the answer; handled on mac and windows
@@ -192,28 +215,13 @@
 		}
 	}
 
-	let isCloseModalShown = false;
-
 	function showCloseModal(isShown: boolean = true) {
 		isCloseModalShown = isShown;
-	}
-
-	$: percentComplete = exercises.length
-		? Math.floor((currentExercise / exercises.length) * 100)
-		: 0;
-
-	$: ({ answers, responseCaseSensitive, exactResponseOnly, questionType } =
-		exercises[currentExercise] || {});
-
-	$: {
-		if (hasSubmitted) {
-			answerIsCorrect = checkResponse(answer, answers, responseCaseSensitive, exactResponseOnly);
-		}
 	}
 </script>
 
 <div class="quizExample" on:keydown={handleKeydown}>
-	{#if currentExercise < exercises.length}
+	{#if score < totalQuestions}
 		<header>
 			<Container>
 				<div class="headerInner">
@@ -224,27 +232,15 @@
 				</div>
 			</Container>
 		</header>
-	{/if}
-	<main>
-		{#if currentExercise < exercises.length}
-			{#key currentExercise}
+		<main>
+			{#key questionsTaken}
 				<Question
-					question={exercises[currentExercise]}
+					question={{ questionType, options: currentOptions, answers, question }}
 					bind:value={answer}
 					disabled={hasSubmitted}
 				/>
 			{/key}
-		{:else}
-			<Container>
-				<Card>
-					<p class="h1"><AccentText>Bravo !</AccentText></p>
-					<p class="h3">Vous avez terminé le quiz.</p>
-					<Button href="/">Go Home</Button>
-				</Card>
-			</Container>
-		{/if}
-	</main>
-	{#if currentExercise < exercises.length}
+		</main>
 		<footer
 			class:success={hasSubmitted && answerIsCorrect}
 			class:error={hasSubmitted && !answerIsCorrect}
@@ -262,13 +258,17 @@
 							}}
 						>
 							{#if answerIsCorrect}
-								<div class="responseRatingIconContainer">
-									<IconCorrect />
+								<div>
+									<div class="responseRatingIconContainer">
+										<IconCorrect />
+									</div>
 								</div>
 								<span><strong>Bravo !</strong></span>
 							{:else}
-								<div class="responseRatingIconContainer responseRatingIconContainer_error">
-									<IconError />
+								<div>
+									<div class="responseRatingIconContainer responseRatingIconContainer_error">
+										<IconError />
+									</div>
 								</div>
 								<span>
 									La bonne réponse était <strong>&laquo; {answers[0]} &raquo;</strong>
@@ -285,6 +285,16 @@
 				</div>
 			</Container>
 		</footer>
+	{:else}
+		<main>
+			<Container>
+				<Card>
+					<p class="h1"><AccentText>Bravo !</AccentText></p>
+					<p class="h3">Vous avez terminé le quiz.</p>
+					<Button href="/">Go Home</Button>
+				</Card>
+			</Container>
+		</main>
 	{/if}
 </div>
 
@@ -381,12 +391,14 @@
 	}
 	.responseRatingIconContainer {
 		position: relative;
-		width: 45px;
-		height: 45px;
+		width: 50px;
+		height: 50px;
 		border-radius: 50%;
 		border: 2px solid var(--color-success);
 		font-size: var(--font-size-xl);
 		font-weight: bold;
+		display: grid;
+		place-items: center;
 
 		&.responseRatingIconContainer_error {
 			border-color: var(--color-error);
