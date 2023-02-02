@@ -19,148 +19,152 @@
 
 	export let data: PageData;
 
-	const exercises = [
-		{
-			questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-			question: 'Comment dit-on <mark>« réunion »</mark> ?',
-			options: ['Reunion', 'Date', 'Meeting'],
-			keepOrder: false,
-			answers: ['Meeting'],
-			responseCaseSensitive: false,
-			exactResponseOnly: false
-		},
-		{
-			questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-			question: 'What is the English word for <mark>« ordinateur »</mark> ?',
-			options: ['Computer', 'Keyboard', 'Mouse'],
-			keepOrder: false,
-			answers: ['Computer'],
-			responseCaseSensitive: false,
-			exactResponseOnly: false
-		},
-		{
-			questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-			question: 'How do you say <mark>« smartphone »</mark> in English?',
-			options: ['Cell phone', 'Smartphone', 'Landline'],
-			keepOrder: false,
-			answers: ['Smartphone'],
-			responseCaseSensitive: false,
-			exactResponseOnly: false
-		},
-		{
-			questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-			question: 'What is the English translation of <mark>« logiciel »</mark>?',
-			options: ['Hardware', 'Software', 'Operating system'],
-			keepOrder: false,
-			answers: ['Software'],
-			responseCaseSensitive: false,
-			exactResponseOnly: false
-		},
-		{
-			questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-			question: 'Comment dit-on <mark>« développeur »</mark> en anglais ?',
-			options: ['Developer', 'Designer', 'Project manager'],
-			keepOrder: false,
-			answers: ['Developer'],
-			responseCaseSensitive: false,
-			exactResponseOnly: false
-		},
-		{
-			questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-			question: 'What is the English word for <mark>« équipe »</mark> ?',
-			options: ['Team', 'Company', 'Organization'],
-			keepOrder: false,
-			answers: ['Team'],
-			responseCaseSensitive: false,
-			exactResponseOnly: false
-		},
-		{
-			questionType: QUESTION_TYPES.FREE_RESPONSE,
-			question: 'Translate the following word into English: <mark>« fichier »</mark>',
-			answers: ['File'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.FREE_RESPONSE,
-			question: 'Translate the following phrase into English: <mark>« ouvrir un fichier »</mark>',
-			answers: ['Open a file'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.FREE_RESPONSE,
-			question: 'Translate the following word into English: <mark>« ordinateur portable »</mark>',
-			answers: ['Laptop'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.FREE_RESPONSE,
-			question: 'Translate the following word into English: <mark>« clavier »</mark>',
-			answers: ['Keyboard'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.FREE_RESPONSE,
-			question:
-				'Translate the following phrase into English: <mark>« sauvegarder un fichier »</mark>',
-			answers: ['Save a file'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-			question:
-				'Translate the following sentence into English: <mark>« Je suis en train de télécharger un fichier »</mark>',
-			answers: ['I am downloading a file'],
-			options: [
-				'File',
-				'Am',
-				'You',
-				'I',
-				'Uploading',
-				'A',
-				'Computer',
-				'Were',
-				'Was',
-				'Downloading',
-				'The',
-				'Document',
-				'Are'
-			],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-			question:
-				'Translate the following sentence into English: <mark>« Je suis développeur »</mark>',
-			answers: ['I am a developer'],
-			options: ['A', 'Developer', 'I', 'Am', 'An', 'Programmer', 'Engineer', 'Were', 'You', 'Was'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-			question:
-				'Translate the following sentence into English: <mark>« Je suis en train de travailler sur mon ordinateur »</mark>',
-			answers: ['I am working on my computer'],
-			options: ['On', 'Working', 'I', 'Am', 'My', 'Computer', 'A', 'The', 'You', 'Were', 'Was'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		},
-		{
-			questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-			question:
-				'Translate the following phrase into English: <mark>« enregistrer un fichier »</mark>',
-			answers: ['Save a file'],
-			options: ['File', 'A', 'Save', 'The', 'Document', 'Upload', 'Download', 'My', 'Your'],
-			exactResponseOnly: false,
-			responseCaseSensitive: false
-		}
-	].sort(() => Math.random() - 0.5);
+	const exerciseQuestions = data.questions || [];
+
+	// const exercises = [
+	// 	{
+	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
+	// 		question: 'Comment dit-on <mark>« réunion »</mark> ?',
+	// 		options: ['Reunion', 'Date', 'Meeting'],
+	// 		keepOrder: false,
+	// 		answers: ['Meeting'],
+	// 		responseCaseSensitive: false,
+	// 		exactResponseOnly: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
+	// 		question: 'What is the English word for <mark>« ordinateur »</mark> ?',
+	// 		options: ['Computer', 'Keyboard', 'Mouse'],
+	// 		keepOrder: false,
+	// 		answers: ['Computer'],
+	// 		responseCaseSensitive: false,
+	// 		exactResponseOnly: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
+	// 		question: 'How do you say <mark>« smartphone »</mark> in English?',
+	// 		options: ['Cell phone', 'Smartphone', 'Landline'],
+	// 		keepOrder: false,
+	// 		answers: ['Smartphone'],
+	// 		responseCaseSensitive: false,
+	// 		exactResponseOnly: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
+	// 		question: 'What is the English translation of <mark>« logiciel »</mark>?',
+	// 		options: ['Hardware', 'Software', 'Operating system'],
+	// 		keepOrder: false,
+	// 		answers: ['Software'],
+	// 		responseCaseSensitive: false,
+	// 		exactResponseOnly: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
+	// 		question: 'Comment dit-on <mark>« développeur »</mark> en anglais ?',
+	// 		options: ['Developer', 'Designer', 'Project manager'],
+	// 		keepOrder: false,
+	// 		answers: ['Developer'],
+	// 		responseCaseSensitive: false,
+	// 		exactResponseOnly: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
+	// 		question: 'What is the English word for <mark>« équipe »</mark> ?',
+	// 		options: ['Team', 'Company', 'Organization'],
+	// 		keepOrder: false,
+	// 		answers: ['Team'],
+	// 		responseCaseSensitive: false,
+	// 		exactResponseOnly: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
+	// 		question: 'Translate the following word into English: <mark>« fichier »</mark>',
+	// 		answers: ['File'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
+	// 		question: 'Translate the following phrase into English: <mark>« ouvrir un fichier »</mark>',
+	// 		answers: ['Open a file'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
+	// 		question: 'Translate the following word into English: <mark>« ordinateur portable »</mark>',
+	// 		answers: ['Laptop'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
+	// 		question: 'Translate the following word into English: <mark>« clavier »</mark>',
+	// 		answers: ['Keyboard'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
+	// 		question:
+	// 			'Translate the following phrase into English: <mark>« sauvegarder un fichier »</mark>',
+	// 		answers: ['Save a file'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
+	// 		question:
+	// 			'Translate the following sentence into English: <mark>« Je suis en train de télécharger un fichier »</mark>',
+	// 		answers: ['I am downloading a file'],
+	// 		options: [
+	// 			'File',
+	// 			'Am',
+	// 			'You',
+	// 			'I',
+	// 			'Uploading',
+	// 			'A',
+	// 			'Computer',
+	// 			'Were',
+	// 			'Was',
+	// 			'Downloading',
+	// 			'The',
+	// 			'Document',
+	// 			'Are'
+	// 		],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
+	// 		question:
+	// 			'Translate the following sentence into English: <mark>« Je suis développeur »</mark>',
+	// 		answers: ['I am a developer'],
+	// 		options: ['A', 'Developer', 'I', 'Am', 'An', 'Programmer', 'Engineer', 'Were', 'You', 'Was'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
+	// 		question:
+	// 			'Translate the following sentence into English: <mark>« Je suis en train de travailler sur mon ordinateur »</mark>',
+	// 		answers: ['I am working on my computer'],
+	// 		options: ['On', 'Working', 'I', 'Am', 'My', 'Computer', 'A', 'The', 'You', 'Were', 'Was'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	},
+	// 	{
+	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
+	// 		question:
+	// 			'Translate the following phrase into English: <mark>« enregistrer un fichier »</mark>',
+	// 		answers: ['Save a file'],
+	// 		options: ['File', 'A', 'Save', 'The', 'Document', 'Upload', 'Download', 'My', 'Your'],
+	// 		exactResponseOnly: false,
+	// 		responseCaseSensitive: false
+	// 	}
+	// ].sort(() => Math.random() - 0.5);
+
+	const exercises = exerciseQuestions.sort(() => Math.random() - 0.5);
 
 	$: stack = [...exercises];
 
@@ -395,7 +399,7 @@
 		height: 50px;
 		border-radius: 50%;
 		border: 2px solid var(--color-success);
-		font-size: var(--font-size-xl);
+		font-size: 30px;
 		font-weight: bold;
 		display: grid;
 		place-items: center;

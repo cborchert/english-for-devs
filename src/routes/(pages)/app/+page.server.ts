@@ -1,7 +1,6 @@
-import { serializeNonPOJO } from '$lib/scripts/utils';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ locals, request }) => {
+export const load = (async ({ locals }) => {
 	// load course and progress data
 
 	// TODO: add course types
