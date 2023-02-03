@@ -5,6 +5,8 @@
 	import IconVideo from '~icons/ph/monitor-play';
 	import IconText from '~icons/ph/article';
 	import IconList from '~icons/ph/list-checks';
+	import Modal from './Modal.svelte';
+	import Button from '../atoms/Button.svelte';
 
 	export let type: 'exercise' | 'reading' | 'audio' | 'video' | 'text' | 'list' = 'exercise';
 	$: chapterIcon = {
@@ -21,6 +23,8 @@
 	export let href: string = '';
 
 	$: complete = progress >= 100;
+
+	let isContinueModalShown: boolean = false;
 </script>
 
 <div class="moduleChapter">
@@ -33,14 +37,54 @@
         var(--color-background) {progress}%
         )"
 	>
-		<a {href} class="moduleChapterIconButton {complete ? 'complete' : ''} ">
+		<a
+			{href}
+			class="moduleChapterIconButton {complete ? 'complete' : ''}"
+			on:click={(e) => {
+				if (complete) {
+					e.preventDefault();
+					isContinueModalShown = true;
+				}
+			}}
+		>
 			<svelte:component this={chapterIcon} />
 		</a>
 	</div>
 	<div class="moduleChapterTitle">
-		<h5><a {href} class="is-color-text">{title}</a></h5>
+		<h5>
+			<a
+				{href}
+				class="is-color-text"
+				on:click={(e) => {
+					if (complete) {
+						e.preventDefault();
+						isContinueModalShown = true;
+					}
+				}}>{title}</a
+			>
+		</h5>
 	</div>
 </div>
+{#if isContinueModalShown}
+	<Modal
+		on:close={() => {
+			isContinueModalShown = false;
+		}}
+		title="Voulez-vous continuer ?"
+		size="sm"
+	>
+		<p>Vous avez déjà complété cette exercice. Est-ce que vous voulez réviser ?</p>
+		<div class="modalFooter">
+			<Button
+				on:click={() => {
+					isContinueModalShown = false;
+				}}
+				variant="ghost">Annuler</Button
+			>
+			<Button href={`${href}?allQuestions=true&random=true`} variant="success">Continuer</Button>
+		</div>
+	</Modal>
+{/if}
 
 <style lang="scss">
 	.moduleChapter {

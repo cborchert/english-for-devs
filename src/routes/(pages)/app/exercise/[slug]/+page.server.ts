@@ -15,10 +15,13 @@ const MAX_TIME_MEDIUM = 10_000; // 10 seconds
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-export const load = (async ({ params, locals }) => {
+export const load = (async ({ params, locals, url }) => {
 	// load exercise data
 
 	const { slug } = params;
+
+	const allowAllQuestions = url.searchParams.get('allQuestions') === 'true';
+	const questionsInRandomOrder = url.searchParams.get('random') === 'true';
 
 	// TODO: add chaoter types
 	const [exercise] = await locals.pb.collection('chapters').getFullList(200, {
@@ -35,22 +38,26 @@ export const load = (async ({ params, locals }) => {
 	const incompleteQuestionIds =
 		exercise.questions?.filter((questionId: any) => !completedQuestionIds.includes(questionId)) ||
 		[];
-	const incompleteQuestions =
-		exercise.expand?.questions?.filter((question: any) =>
-			incompleteQuestionIds.includes(question.id)
-		) || [];
-	const nextQuestions = incompleteQuestions.slice(0, 10).map((question: any) => ({
-		id: question.id,
-		questionType: question.questionType,
-		title: question.title,
-		question: question.question,
-		options: question.options,
-		answers: question.answers,
-		// TODO: add to question record
-		keepOrder: false,
-		responseCaseSensitive: false,
-		exactResponseOnly: false
-	}));
+	const possibleQuestions = allowAllQuestions
+		? exercise.expand?.questions
+		: exercise.expand?.questions?.filter((question: any) =>
+				incompleteQuestionIds.includes(question.id)
+		  ) || [];
+	const nextQuestions = possibleQuestions
+		.sort(() => (questionsInRandomOrder ? Math.random() - 0.5 : 0))
+		.slice(0, 10)
+		.map((question: any) => ({
+			id: question.id,
+			questionType: question.questionType,
+			title: question.title,
+			question: question.question,
+			options: question.options,
+			answers: question.answers,
+			// TODO: add to question record
+			keepOrder: false,
+			responseCaseSensitive: false,
+			exactResponseOnly: false
+		}));
 
 	return {
 		exerciseId: exercise.id,

@@ -334,7 +334,7 @@
 						<input type="hidden" name="exerciseId" value={exerciseId} />
 						<p class="h1"><AccentText>Bravo !</AccentText></p>
 						<p class="h4">
-							Vous avez terminé l'exercise. Continuer pour sauvegarder votre progrès.
+							Vous avez terminé l'exercice. Continuer pour sauvegarder votre progrès.
 						</p>
 						<Button type="submit">Continuer</Button>
 					</form>

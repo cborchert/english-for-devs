@@ -27,7 +27,7 @@
 		</div>
 	{/if}
 	<section class:restricted={variant === 'locked'}>
-		<div class="moduleCard {variant}">
+		<div class="moduleCard {variant}" class:closed={!open}>
 			<div>
 				<head>
 					<button
@@ -82,6 +82,7 @@
 		padding: var(--space-md) var(--space-lg) var(--space-lg);
 		background-color: var(--color-primary-dark);
 		border-radius: var(--border-radius) var(--border-radius) 0 0;
+		transition: border-radius 0s ease-in-out;
 
 		&.current {
 			background-color: var(--color-secondary);
@@ -91,6 +92,10 @@
 		&.locked {
 			background: transparent;
 			border: 1px solid var(--color-text);
+		}
+		&.closed {
+			transition: border-radius 0.1s 0.1s ease-in-out;
+			border-radius: var(--border-radius);
 		}
 	}
 	main {
