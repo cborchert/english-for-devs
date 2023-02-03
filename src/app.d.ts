@@ -17,3 +17,11 @@ declare namespace App {
 }
 
 declare type ContainerSize = 'sm' | 'md' | 'lg';
+
+declare type Attempt = {
+	questionId: string;
+	answer: string | undefined;
+	success: boolean;
+	dateTime: string;
+	timeTakenInMs: number;
+};

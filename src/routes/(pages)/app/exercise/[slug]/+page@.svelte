@@ -3,10 +3,11 @@
 	import IconError from '~icons/ph/x';
 	import { scale } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
+	import { onMount } from 'svelte';
 
 	import type { PageData } from './$types';
 
-	import { checkResponse, QUESTION_TYPES } from '$lib/scripts/questions';
+	import { checkResponse } from '$lib/scripts/questions';
 
 	import Card from '$lib/components/atoms/Card.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
@@ -19,7 +20,7 @@
 
 	export let data: PageData;
 
-	const exerciseQuestions = data.questions || [];
+	const { exerciseId, questions: exerciseQuestions = [] } = data;
 
 	// const exercises = [
 	// 	{
@@ -175,6 +176,9 @@
 	let answer: string | undefined = undefined;
 	let answerIsCorrect: boolean = false;
 	let isCloseModalShown: boolean = false;
+	let startTime = Date.now();
+	let additionalTime = 0;
+	let attempts: Attempt[] = [];
 
 	$: percentComplete = totalQuestions ? Math.floor((score / totalQuestions) * 100) : 0;
 
@@ -182,7 +186,28 @@
 		stack[0] || {});
 	$: currentOptions = options?.sort(() => Math.random() - 0.5);
 
+	/**
+	 * When the user switches tabs, pause the timer
+	 */
+	function handleVisibilityChange() {
+		if (document.hidden) {
+			additionalTime += Date.now() - startTime;
+		} else {
+			startTime = Date.now();
+		}
+	}
+	onMount(() => {
+		document.addEventListener('visibilitychange', handleVisibilityChange, false);
+		return () => {
+			document.removeEventListener('visibilitychange', handleVisibilityChange, false);
+		};
+	});
+
 	function respond(skip: boolean = false) {
+		let endTime = Date.now();
+		let timeTakenInMs = endTime - startTime + additionalTime;
+		let questionId = stack[0].id;
+
 		hasSubmitted = true;
 		if (skip) {
 			answer = undefined;
@@ -191,6 +216,16 @@
 		if (answerIsCorrect) {
 			score++;
 		}
+		attempts = [
+			...attempts,
+			{
+				questionId,
+				answer,
+				success: answerIsCorrect,
+				dateTime: new Date().toString(),
+				timeTakenInMs
+			}
+		];
 	}
 
 	function next() {
@@ -206,6 +241,7 @@
 		hasSubmitted = false;
 		answer = undefined;
 		answerIsCorrect = false;
+		startTime = Date.now();
 	}
 
 	// if control/cmnd + enter is pressed, submit the answer; handled on mac and windows
@@ -293,9 +329,15 @@
 		<main>
 			<Container>
 				<Card>
-					<p class="h1"><AccentText>Bravo !</AccentText></p>
-					<p class="h3">Vous avez terminé le quiz.</p>
-					<Button href="/">Go Home</Button>
+					<form action="?/saveProgress" method="POST">
+						<input type="hidden" name="attempts" value={JSON.stringify(attempts)} />
+						<input type="hidden" name="exerciseId" value={exerciseId} />
+						<p class="h1"><AccentText>Bravo !</AccentText></p>
+						<p class="h4">
+							Vous avez terminé l'exercise. Continuer pour sauvegarder votre progrès.
+						</p>
+						<Button type="submit">Continuer</Button>
+					</form>
 				</Card>
 			</Container>
 		</main>

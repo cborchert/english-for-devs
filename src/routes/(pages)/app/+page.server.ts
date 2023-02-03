@@ -26,7 +26,7 @@ export const load = (async ({ locals }) => {
 			progress =
 				numberOfChapterQuestions > 0 ? numberOfCompletedQuestions / numberOfChapterQuestions : 0;
 		} else {
-			progress = item.progress || 0;
+			progress = item.percentComplete || 0;
 		}
 		return {
 			...acc,
