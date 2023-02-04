@@ -179,6 +179,7 @@
 	let startTime = Date.now();
 	let additionalTime = 0;
 	let attempts: Attempt[] = [];
+	let done = false;
 
 	$: percentComplete = totalQuestions ? Math.floor((score / totalQuestions) * 100) : 0;
 
@@ -242,6 +243,7 @@
 		answer = undefined;
 		answerIsCorrect = false;
 		startTime = Date.now();
+		done = score >= totalQuestions;
 	}
 
 	// if control/cmnd + enter is pressed, submit the answer; handled on mac and windows
@@ -261,7 +263,7 @@
 </script>
 
 <div class="quizExample" on:keydown={handleKeydown}>
-	{#if score < totalQuestions}
+	{#if !done}
 		<header>
 			<Container>
 				<div class="headerInner">

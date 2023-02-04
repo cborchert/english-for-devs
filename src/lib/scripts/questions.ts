@@ -27,16 +27,19 @@ export function checkResponse(
 	caseSensitive = false,
 	exactResponseOnly = false
 ): boolean {
+	console.log({ exactResponseOnly });
 	let transformedResponse = caseSensitive ? response : response.toLowerCase();
 	let transformedCorrectResponses = caseSensitive
 		? correctResponses
 		: correctResponses.map((a) => a.toLowerCase());
 	if (!exactResponseOnly) {
 		// remove all punctuation marks
-		transformedResponse = transformedResponse.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '').trim();
+		transformedResponse = transformedResponse.replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, '').trim();
+		console.log({ transformedResponse });
 		transformedCorrectResponses = transformedCorrectResponses.map((a) =>
-			a.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '').trim()
+			a.replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, '').trim()
 		);
+		console.log({ transformedCorrectResponses });
 	}
 	return transformedCorrectResponses.includes(transformedResponse);
 }

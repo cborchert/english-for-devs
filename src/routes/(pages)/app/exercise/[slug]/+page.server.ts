@@ -186,8 +186,8 @@ export const actions: Actions = {
 
 			// save mastery
 			await locals.pb.collection('mastery').update(previousMastery.id, {
-				ease: newEase,
-				interval: newInterval,
+				ease: Math.floor(newEase * 100) / 100,
+				interval: Math.floor(newInterval * 100) / 100,
 				nextScheduledAttempt,
 				attempts: newAttempts,
 				mastery: newMastery
