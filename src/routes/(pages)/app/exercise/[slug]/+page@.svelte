@@ -227,6 +227,12 @@
 				timeTakenInMs
 			}
 		];
+
+		const synth = window.speechSynthesis;
+		const voice = synth.getVoices().find((v) => v.lang === 'en-US');
+		const utterance = new SpeechSynthesisUtterance(answers[0]);
+		if (voice?.name) utterance.voice = voice;
+		synth.speak(utterance);
 	}
 
 	function next() {
