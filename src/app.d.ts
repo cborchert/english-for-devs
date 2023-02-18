@@ -16,7 +16,7 @@ declare namespace App {
 	// interface Platform {}
 }
 
-declare type ContainerSize = 'sm' | 'md' | 'lg';
+declare type ContainerSize = 'xs' | 'sm' | 'md' | 'lg';
 
 declare type Attempt = {
 	questionId: string;

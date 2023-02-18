@@ -240,7 +240,7 @@
 </div>
 
 {#if isCloseModalShown}
-	<Modal on:close={() => showCloseModal(false)} title="Voulez-vous vraiment quitter ?" size="sm">
+	<Modal on:close={() => showCloseModal(false)} title="Voulez-vous vraiment quitter ?" size="xs">
 		<p class="modalBody">Tout votre progrès sera perdu</p>
 		<div class="modalFooter">
 			<Button on:click={() => showCloseModal(false)} variant="ghost">Annuler</Button>

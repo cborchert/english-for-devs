@@ -13,6 +13,10 @@
 		width: 100%;
 		padding: var(--space-lg) var(--space);
 
+		&.xs {
+			max-width: var(--width-md);
+		}
+
 		&.sm {
 			max-width: var(--width-lg);
 		}

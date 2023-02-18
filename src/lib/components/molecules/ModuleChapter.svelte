@@ -71,7 +71,7 @@
 			isContinueModalShown = false;
 		}}
 		title="Voulez-vous continuer ?"
-		size="sm"
+		size="xs"
 	>
 		<p>Vous avez déjà complété cette exercice. Est-ce que vous voulez réviser ?</p>
 		<div class="modalFooter">
@@ -87,6 +87,7 @@
 {/if}
 
 <style lang="scss">
+	@use '$lib/styles/_breakpoints.scss' as *;
 	.moduleChapter {
 		display: flex;
 		align-items: center;
@@ -131,5 +132,15 @@
 	}
 	.moduleChapterTitle {
 		margin-left: var(--space);
+	}
+	.modalFooter {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space);
+		justify-content: space-between;
+
+		@include screen-medium {
+			flex-direction: row;
+		}
 	}
 </style>
