@@ -1,15 +1,20 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	import type { PageData } from './$types';
 
 	import AccentText from '$lib/components/atoms/AccentText.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
+	import Transition from '$lib/components/atoms/Transition.svelte';
 
 	export let data: PageData;
 </script>
 
 <div class="page">
 	<header>
-		<a href="/" class="no-underline h5"><AccentText>&lt;Anglais /&gt;</AccentText></a>
+		<a href={data?.user ? '/app' : '/'} class="no-underline h5"
+			><AccentText>&lt;Anglais /&gt;</AccentText></a
+		>
 		<nav>
 			<li>
 				<Button href="/login" size="small" variant="ghost"
@@ -19,7 +24,9 @@
 		</nav>
 	</header>
 	<main>
-		<slot />
+		<Transition url={$page.url.toString()}>
+			<slot />
+		</Transition>
 	</main>
 	<footer />
 </div>
