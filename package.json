@@ -17,6 +17,8 @@
 		"@sveltejs/kit": "^1.0.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
+		"cli-progress": "^3.11.2",
+		"dotenv": "^16.0.3",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-simple-import-sort": "^9.0.0",
@@ -33,6 +35,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@google-cloud/text-to-speech": "^4.2.0",
+		"aws-sdk": "^2.1313.0",
 		"pocketbase": "^0.10.0",
 		"rehype-stringify": "^9.0.3",
 		"remark": "^14.0.2",

@@ -1,4 +1,5 @@
 import { redirect } from '@sveltejs/kit';
+
 import type { PageServerLoad, Actions } from './$types';
 
 const MIN_EASE = 1.5;
@@ -56,7 +57,8 @@ export const load = (async ({ params, locals, url }) => {
 			// TODO: add to question record
 			keepOrder: false,
 			responseCaseSensitive: false,
-			exactResponseOnly: false
+			exactResponseOnly: false,
+			responseAudioUrl: question.responseAudioUrl
 		}));
 
 	return {

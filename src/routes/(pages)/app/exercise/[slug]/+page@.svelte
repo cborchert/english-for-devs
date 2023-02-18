@@ -22,149 +22,6 @@
 
 	const { exerciseId, questions: exerciseQuestions = [] } = data;
 
-	// const exercises = [
-	// 	{
-	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-	// 		question: 'Comment dit-on <mark>« réunion »</mark> ?',
-	// 		options: ['Reunion', 'Date', 'Meeting'],
-	// 		keepOrder: false,
-	// 		answers: ['Meeting'],
-	// 		responseCaseSensitive: false,
-	// 		exactResponseOnly: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-	// 		question: 'What is the English word for <mark>« ordinateur »</mark> ?',
-	// 		options: ['Computer', 'Keyboard', 'Mouse'],
-	// 		keepOrder: false,
-	// 		answers: ['Computer'],
-	// 		responseCaseSensitive: false,
-	// 		exactResponseOnly: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-	// 		question: 'How do you say <mark>« smartphone »</mark> in English?',
-	// 		options: ['Cell phone', 'Smartphone', 'Landline'],
-	// 		keepOrder: false,
-	// 		answers: ['Smartphone'],
-	// 		responseCaseSensitive: false,
-	// 		exactResponseOnly: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-	// 		question: 'What is the English translation of <mark>« logiciel »</mark>?',
-	// 		options: ['Hardware', 'Software', 'Operating system'],
-	// 		keepOrder: false,
-	// 		answers: ['Software'],
-	// 		responseCaseSensitive: false,
-	// 		exactResponseOnly: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-	// 		question: 'Comment dit-on <mark>« développeur »</mark> en anglais ?',
-	// 		options: ['Developer', 'Designer', 'Project manager'],
-	// 		keepOrder: false,
-	// 		answers: ['Developer'],
-	// 		responseCaseSensitive: false,
-	// 		exactResponseOnly: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.MULTIPLE_CHOICE,
-	// 		question: 'What is the English word for <mark>« équipe »</mark> ?',
-	// 		options: ['Team', 'Company', 'Organization'],
-	// 		keepOrder: false,
-	// 		answers: ['Team'],
-	// 		responseCaseSensitive: false,
-	// 		exactResponseOnly: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
-	// 		question: 'Translate the following word into English: <mark>« fichier »</mark>',
-	// 		answers: ['File'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
-	// 		question: 'Translate the following phrase into English: <mark>« ouvrir un fichier »</mark>',
-	// 		answers: ['Open a file'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
-	// 		question: 'Translate the following word into English: <mark>« ordinateur portable »</mark>',
-	// 		answers: ['Laptop'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
-	// 		question: 'Translate the following word into English: <mark>« clavier »</mark>',
-	// 		answers: ['Keyboard'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.FREE_RESPONSE,
-	// 		question:
-	// 			'Translate the following phrase into English: <mark>« sauvegarder un fichier »</mark>',
-	// 		answers: ['Save a file'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-	// 		question:
-	// 			'Translate the following sentence into English: <mark>« Je suis en train de télécharger un fichier »</mark>',
-	// 		answers: ['I am downloading a file'],
-	// 		options: [
-	// 			'File',
-	// 			'Am',
-	// 			'You',
-	// 			'I',
-	// 			'Uploading',
-	// 			'A',
-	// 			'Computer',
-	// 			'Were',
-	// 			'Was',
-	// 			'Downloading',
-	// 			'The',
-	// 			'Document',
-	// 			'Are'
-	// 		],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-	// 		question:
-	// 			'Translate the following sentence into English: <mark>« Je suis développeur »</mark>',
-	// 		answers: ['I am a developer'],
-	// 		options: ['A', 'Developer', 'I', 'Am', 'An', 'Programmer', 'Engineer', 'Were', 'You', 'Was'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-	// 		question:
-	// 			'Translate the following sentence into English: <mark>« Je suis en train de travailler sur mon ordinateur »</mark>',
-	// 		answers: ['I am working on my computer'],
-	// 		options: ['On', 'Working', 'I', 'Am', 'My', 'Computer', 'A', 'The', 'You', 'Were', 'Was'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	},
-	// 	{
-	// 		questionType: QUESTION_TYPES.ASSISTED_RESPONSE,
-	// 		question:
-	// 			'Translate the following phrase into English: <mark>« enregistrer un fichier »</mark>',
-	// 		answers: ['Save a file'],
-	// 		options: ['File', 'A', 'Save', 'The', 'Document', 'Upload', 'Download', 'My', 'Your'],
-	// 		exactResponseOnly: false,
-	// 		responseCaseSensitive: false
-	// 	}
-	// ].sort(() => Math.random() - 0.5);
-
 	const exercises = exerciseQuestions.sort(() => Math.random() - 0.5);
 
 	$: stack = [...exercises];
@@ -180,6 +37,14 @@
 	let additionalTime = 0;
 	let attempts: Attempt[] = [];
 	let done = false;
+	let responseAudio =
+		exerciseQuestions[0].responseAudioUrl && typeof Audio !== 'undefined'
+			? new Audio(exerciseQuestions[0].responseAudioUrl)
+			: null;
+	let responseSound: HTMLAudioElement | null = null;
+	let correctAudio: HTMLAudioElement | null = null;
+	let incorrectAudio: HTMLAudioElement | null = null;
+	let completeAudio: HTMLAudioElement | null = null;
 
 	$: percentComplete = totalQuestions ? Math.floor((score / totalQuestions) * 100) : 0;
 
@@ -197,8 +62,12 @@
 			startTime = Date.now();
 		}
 	}
-	onMount(() => {
+
+	onMount(async () => {
 		document.addEventListener('visibilitychange', handleVisibilityChange, false);
+		correctAudio = new Audio('/audio/correct.mp3');
+		incorrectAudio = new Audio('/audio/incorrect.mp3');
+		completeAudio = new Audio('/audio/complete.mp3');
 		return () => {
 			document.removeEventListener('visibilitychange', handleVisibilityChange, false);
 		};
@@ -227,12 +96,9 @@
 				timeTakenInMs
 			}
 		];
-
-		const synth = window.speechSynthesis;
-		const voice = synth.getVoices().find((v) => v.lang === 'en-US');
-		const utterance = new SpeechSynthesisUtterance(answers[0]);
-		if (voice?.name) utterance.voice = voice;
-		synth.speak(utterance);
+		responseSound = answerIsCorrect ? correctAudio : incorrectAudio;
+		responseSound?.play();
+		responseAudio?.play();
 	}
 
 	function next() {
@@ -250,6 +116,15 @@
 		answerIsCorrect = false;
 		startTime = Date.now();
 		done = score >= totalQuestions;
+		// NOTE this is necessary since sometimes the audio is still playing when the next question is rendered
+		if (responseSound) {
+			responseSound.pause();
+			responseSound.currentTime = 0;
+		}
+		if (done) {
+			completeAudio?.play();
+		}
+		responseAudio = newStack[0]?.responseAudioUrl ? new Audio(newStack[0].responseAudioUrl) : null;
 	}
 
 	// if control/cmnd + enter is pressed, submit the answer; handled on mac and windows
@@ -334,7 +209,14 @@
 			</Container>
 		</footer>
 	{:else}
-		<main>
+		<main
+			in:scale={{
+				duration: 70,
+				opacity: 0.5,
+				start: 0.5,
+				easing: cubicIn
+			}}
+		>
 			<Container>
 				<Card>
 					<form action="?/saveProgress" method="POST">

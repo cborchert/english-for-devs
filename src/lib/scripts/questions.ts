@@ -27,7 +27,6 @@ export function checkResponse(
 	caseSensitive = false,
 	exactResponseOnly = false
 ): boolean {
-	console.log({ exactResponseOnly });
 	let transformedResponse = caseSensitive ? response : response.toLowerCase();
 	let transformedCorrectResponses = caseSensitive
 		? correctResponses

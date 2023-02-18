@@ -11,7 +11,7 @@
 
 <Container>
 	<h1>Admin</h1>
-	<!-- <h3>Questions</h3>
+	<h3>Questions</h3>
 	<QuestionsList />
 	<Button variant="ghost" size="small" on:click={() => (modalVisible = true)}>New Question</Button>
 	{#if modalVisible}
@@ -23,7 +23,7 @@
 		>
 			<NewQuestionForm />
 		</Modal>
-	{/if} -->
+	{/if}
 	<h2>Mass Exercise creator</h2>
 	<p>Enter exercises as JSON (must be an array)</p>
 	<pre>{`
