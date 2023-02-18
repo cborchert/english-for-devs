@@ -8,7 +8,9 @@
 	import type { PageData } from './$types';
 
 	import { checkResponse } from '$lib/scripts/questions';
+	import { audioEnabled } from '$lib/stores/audioStore';
 
+	import AudioSettingButton from '$lib/components/atoms/AudioSettingButton.svelte';
 	import Card from '$lib/components/atoms/Card.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Container from '$lib/components/atoms/Container.svelte';
@@ -96,9 +98,11 @@
 				timeTakenInMs
 			}
 		];
-		responseSound = answerIsCorrect ? correctAudio : incorrectAudio;
-		responseSound?.play();
-		responseAudio?.play();
+		if ($audioEnabled) {
+			responseSound = answerIsCorrect ? correctAudio : incorrectAudio;
+			responseSound?.play();
+			responseAudio?.play();
+		}
 	}
 
 	function next() {
@@ -121,7 +125,7 @@
 			responseSound.pause();
 			responseSound.currentTime = 0;
 		}
-		if (done) {
+		if (done && $audioEnabled) {
 			completeAudio?.play();
 		}
 		responseAudio = newStack[0]?.responseAudioUrl ? new Audio(newStack[0].responseAudioUrl) : null;
@@ -152,6 +156,7 @@
 					<div class="headerProgress">
 						<ProgressBar progress={percentComplete} variant="gradient" />
 					</div>
+					<AudioSettingButton />
 				</div>
 			</Container>
 		</header>
@@ -275,7 +280,7 @@
 
 	.headerProgress {
 		flex: 1;
-		margin-left: var(--space-lg);
+		margin: 0 var(--space-lg);
 	}
 
 	main {
