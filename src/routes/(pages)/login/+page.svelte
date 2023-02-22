@@ -35,7 +35,8 @@
 						error={form?.errors?.password?.[0]}
 					/>
 					<p>
-						Mot de passe oublié ? <a href="/login/resetPassword">Reinitialisez votre mot de passe</a
+						Mot de passe oublié ? <a href="/login/reset-password"
+							>Reinitialisez votre mot de passe</a
 						>.
 					</p>
 					<Button type="submit">Connexion</Button>
@@ -43,7 +44,7 @@
 				{#if form?.unverifiedAccount}
 					<Notification type="error">
 						Votre compte n'a pas encore été vérifié. Veuillez vérifier votre boîte mail. <a
-							href="/login/resendVerificationEmail"
+							href="/login/resend-verification-email"
 							class="is-color-text">Renvoyer l'email de vérification</a
 						>
 					</Notification>
