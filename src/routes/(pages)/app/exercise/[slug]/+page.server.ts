@@ -1,3 +1,8 @@
+import type {
+	ChaptersResponse,
+	ProgressResponse,
+	QuestionsResponse
+} from '$lib/types/pocketbaseTypes';
 import { redirect } from '@sveltejs/kit';
 
 import type { PageServerLoad, Actions } from './$types';
@@ -28,41 +33,41 @@ export const load = (async ({ params, locals, url }) => {
 	const allowAllQuestions = url.searchParams.get('allQuestions') === 'true';
 	const questionsInRandomOrder = url.searchParams.get('random') === 'true';
 
-	// TODO: add chaoter types
-	const [exercise] = await locals.pb.collection('chapters').getFullList(200, {
-		filter: `slug = "${slug}"`,
-		expand: 'questions'
-	});
+	const chapters: ChaptersResponse<{ questions: QuestionsResponse[] }>[] =
+		(await locals.pb.collection('chapters').getFullList(200, {
+			filter: `slug = "${slug}"`,
+			expand: 'questions'
+		})) || [];
+	const [exercise] = chapters;
 
-	// TODO: add progress types
-	const progress = await locals.pb.collection('progress').getFullList(200, {
+	const progress: ProgressResponse[] = await locals.pb.collection('progress').getFullList(200, {
 		filter: `user.id = "${locals.pb?.authStore?.model?.id}" && chapter = "${exercise?.id}"`
 	});
 
-	const completedQuestionIds = progress[0]?.completedQuestions || [];
+	const completedQuestionIds = progress?.[0]?.completedQuestions || [];
 	const incompleteQuestionIds =
-		exercise.questions?.filter((questionId: any) => !completedQuestionIds.includes(questionId)) ||
-		[];
-	const possibleQuestions = allowAllQuestions
-		? exercise.expand?.questions
-		: exercise.expand?.questions?.filter((question: any) =>
-				incompleteQuestionIds.includes(question.id)
-		  ) || [];
+		exercise.questions?.filter((questionId) => !completedQuestionIds.includes(questionId)) || [];
+	const possibleQuestions =
+		(allowAllQuestions
+			? exercise.expand?.questions
+			: exercise.expand?.questions?.filter((question) =>
+					incompleteQuestionIds.includes(question.id)
+			  )) || [];
 	const nextQuestions = possibleQuestions
 		.sort(() => (questionsInRandomOrder ? Math.random() - 0.5 : 0))
 		.slice(0, 10)
-		.map((question: any) => ({
+		.map((question) => ({
 			id: question.id,
 			questionType: question.questionType,
 			title: question.title,
 			question: question.question,
 			options: question.options,
 			answers: question.answers,
-			// TODO: add to question record
+			responseAudioUrl: question.responseAudioUrl,
+			// TODO: add additional options such as keepOrder to question record
 			keepOrder: false,
 			responseCaseSensitive: false,
-			exactResponseOnly: false,
-			responseAudioUrl: question.responseAudioUrl
+			exactResponseOnly: false
 		}));
 
 	return {

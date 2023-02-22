@@ -1,20 +1,19 @@
 import type {
-	CoursesRecord,
+	ChaptersResponse,
 	CoursesResponse,
-	ModulesRecord,
-	ProgressRecord,
+	ModulesResponse,
 	ProgressResponse
 } from '$lib/types/pocketbaseTypes';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	// load course and progress data
-	const courses: CoursesResponse<{ modules: ModulesRecord[] }>[] = await locals.pb
-		.collection('courses')
-		.getFullList(200, {
-			filter: 'slug = "anglais-pour-les-devs"',
-			expand: 'modules,modules.chapters'
-		});
+	const courses: CoursesResponse<{
+		modules: ModulesResponse<{ chapters: ChaptersResponse[] }>[];
+	}>[] = await locals.pb.collection('courses').getFullList(200, {
+		filter: 'slug = "anglais-pour-les-devs"',
+		expand: 'modules,modules.chapters'
+	});
 
 	const progress: ProgressResponse[] = await locals.pb.collection('progress').getFullList(200, {
 		filter: `user.id = "${locals.pb?.authStore?.model?.id}"`,
@@ -40,12 +39,13 @@ export const load = (async ({ locals }) => {
 		};
 	}, {});
 
-	const moduleProgress: { [id: string]: number } = modules.reduce((acc: any, module: any) => {
+	const moduleProgress: { [id: string]: number } = modules.reduce((acc, module) => {
 		const numberOfModuleChapters = module.chapters?.length || 0;
-		const moduleChapterProgressSum = module.chapters?.reduce(
-			(acc: any, chapterId: any) => acc + chapterProgress[chapterId] || 0,
-			0
-		);
+		const moduleChapterProgressSum =
+			module.chapters?.reduce(
+				(chapterAcc, chapterId) => chapterAcc + chapterProgress[chapterId] || 0,
+				0
+			) || 0;
 		const moduleProgress =
 			numberOfModuleChapters > 0 ? moduleChapterProgressSum / numberOfModuleChapters : 0;
 		return {
@@ -58,14 +58,12 @@ export const load = (async ({ locals }) => {
 	const sanitizedCourse = {
 		title: course.title,
 		description: course.description,
-		// TODO: add module types
-		modules: course.expand?.modules?.map((module: any) => ({
+		modules: course.expand?.modules?.map((module) => ({
 			title: module.title,
 			subtitle: module.subtitle,
 			// TODO: determine variant 'current' | 'upcoming' | 'completed' | 'locked'
 			progress: (moduleProgress[module.id] || 0) * 100,
-			// TODO: add chapter types
-			chapters: module.expand?.chapters?.map((chapter: any) => {
+			chapters: module.expand?.chapters?.map((chapter) => {
 				const pageTyoe = chapter.chapterType === 'exercise' ? 'exercise' : 'lesson';
 				const href = `/app/${pageTyoe}/${chapter.slug}`;
 				return {
