@@ -17,8 +17,12 @@ const MAX_TIME_MEDIUM = 10_000; // 10 seconds
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 export const load = (async ({ params, locals, url }) => {
-	// load exercise data
+	// logged in users are redirected to the app
+	if (!locals.user) {
+		throw redirect(303, '/');
+	}
 
+	// load exercise data
 	const { slug } = params;
 
 	const allowAllQuestions = url.searchParams.get('allQuestions') === 'true';

@@ -2,7 +2,6 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Card from '$lib/components/atoms/Card.svelte';
 	import Container from '$lib/components/atoms/Container.svelte';
-	import Module from '$lib/components/molecules/Module.svelte';
 </script>
 
 <Container>

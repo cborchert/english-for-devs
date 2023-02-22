@@ -1,8 +1,13 @@
 import { serializeNonPOJO } from '$lib/scripts/utils';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
+	// logged in users are redirected to the app
+	if (!locals.user) {
+		throw redirect(303, '/');
+	}
+
 	const records = await locals.pb.collection('questions').getFullList(200, {
 		sort: '-created'
 	});

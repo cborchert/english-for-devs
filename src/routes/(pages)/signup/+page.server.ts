@@ -31,7 +31,6 @@ export const actions: Actions = {
 			if (!validatedBody.success) {
 				const { fieldErrors: errors } = validatedBody.error.flatten();
 				const { password, passwordConfirm, ...bodyData } = body;
-				console.log({ errors });
 				return fail(400, {
 					data: bodyData,
 					errors
