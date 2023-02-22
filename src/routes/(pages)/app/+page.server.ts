@@ -1,22 +1,28 @@
+import type {
+	CoursesRecord,
+	CoursesResponse,
+	ModulesRecord,
+	ProgressRecord,
+	ProgressResponse
+} from '$lib/types/pocketbaseTypes';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	// load course and progress data
+	const courses: CoursesResponse<{ modules: ModulesRecord[] }>[] = await locals.pb
+		.collection('courses')
+		.getFullList(200, {
+			filter: 'slug = "anglais-pour-les-devs"',
+			expand: 'modules,modules.chapters'
+		});
 
-	// TODO: add course types
-	const courses = await locals.pb.collection('courses').getFullList(200, {
-		filter: 'slug = "anglais-pour-les-devs"',
-		expand: 'modules,modules.chapters'
-	});
-
-	// TODO: add progress types
-	const progress = await locals.pb.collection('progress').getFullList(200, {
+	const progress: ProgressResponse[] = await locals.pb.collection('progress').getFullList(200, {
 		filter: `user.id = "${locals.pb?.authStore?.model?.id}"`,
 		expand: 'chapter'
 	});
 
 	const course = courses?.[0] || {};
-	const modules = course.expand?.modules;
+	const modules = course.expand?.modules || [];
 
 	const chapterProgress: { [id: string]: number } = progress.reduce((acc: any, item: any) => {
 		let progress = 0;

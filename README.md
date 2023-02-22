@@ -46,3 +46,10 @@ We're deploying to netlify without any special set up so we're sticking with the
 
 Don't forget to set up a `VITE_POCKETBASE_URL` environment variable in the netlify UI.
 
+## Generating types 
+
+Pocketbase types can be generated from the database using the following command 
+
+`npx pocketbase-typegen --db ./_pocketbase/pb_data/data.db --out src/lib/types/pocketbaseTypes.ts`
+
+See https://www.npmjs.com/package/pocketbase-typegen for more info.
