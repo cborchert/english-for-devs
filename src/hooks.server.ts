@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase';
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 
 import { serializeNonPOJO } from '$lib/scripts/utils';
 
@@ -13,6 +13,12 @@ export const handle = (async ({ event, resolve }) => {
 		event.locals.user = serializeNonPOJO(event.locals.pb.authStore.model);
 	} else {
 		event.locals.user = undefined;
+	}
+
+	// protect the /app/ routes
+	// if the user is not logged in, redirect to the login page
+	if (event.url.pathname.startsWith('/app/') && !event.locals.user) {
+		throw redirect(303, '/login');
 	}
 
 	const response = await resolve(event);
