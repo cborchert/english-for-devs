@@ -17,7 +17,10 @@ export const handle = (async ({ event, resolve }) => {
 
 	// protect the /app/ routes
 	// if the user is not logged in, redirect to the login page
-	if (event.url.pathname.startsWith('/app/') && !event.locals.user) {
+	if (
+		(event.url.pathname.startsWith('/app/') || event.url.pathname === '/app') &&
+		!event.locals.user
+	) {
 		throw redirect(303, '/login');
 	}
 
